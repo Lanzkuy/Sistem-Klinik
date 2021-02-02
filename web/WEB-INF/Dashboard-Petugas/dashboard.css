@@ -129,6 +129,11 @@
   cursor: pointer;
 }
 
+.navbar .container-fluid
+{
+  padding: 0;
+}
+
 /* ===== MOBILE =====*/
 @media screen and (max-width: 1200px){
 
@@ -167,7 +172,7 @@
   }
 
   .sidebar .sidebar-brand h3 p ,
-  .sidebar li a p
+  .sidebar li a p, .navbar-brand
   {
     display: none;
     padding-right: 0;
