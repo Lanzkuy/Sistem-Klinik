@@ -1,0 +1,180 @@
+/*=== GOOGLE FONTS ====*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+/*==== VARIABLES ====*/
+:root
+{
+  --bg-color: linear-gradient(120deg, #2FADFF, #7EE0FF);
+  --blue: #2FADFF;
+  --white: #FFF;
+}
+
+/*==== BASE ====*/
+*
+{
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
+  font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
+}
+
+/*==== Sidebar ====*/
+.sidebar
+{
+  position: fixed;
+  width: 345px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: var(--bg-color);
+  z-index: 1;
+  padding: 1rem;
+  transition: .5s;
+}
+
+.nav{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/*==== Sidebar-Brand ====*/
+.sidebar h3
+{
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  font-weight: bold;
+  color: var(--white);
+}
+
+.sidebar h3 span
+{
+  display: inline;
+  padding-right: 1rem;
+}
+
+.sidebar h3 p
+{
+  display: inline;
+}
+
+/*==== Sidebar-Menu ====*/
+.sidebar-menu
+{
+  padding-top: 1rem;
+}
+
+.sidebar-menu .active
+{
+  background: var(--white);
+  opacity: 0.9;
+}
+
+.sidebar-menu .active:hover
+{
+  background: var(--white);
+}
+
+.sidebar .active a
+{
+  color: var(--blue);
+}
+
+.sidebar-menu li
+{
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  transition: .5s;
+  cursor: pointer;
+}
+
+.sidebar-menu li:hover
+{
+  background: rgba(255, 255, 255, 0.13);
+  opacity: 1;
+}
+
+.sidebar-menu li a
+{
+  display: block;
+  color: var(--white);
+}
+
+.sidebar-menu span
+{
+  width: 20px
+}
+
+.sidebar-menu li a p
+{
+  display: inline;
+}
+
+/*==== Navbar ====*/
+.navbar
+{
+  margin-left: 345px;
+  padding: 1rem;
+  transition: .5s;
+}
+
+.navbar a
+{
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+/* ===== MOBILE =====*/
+@media screen and (max-width: 1200px){
+
+  .sidebar
+  {
+    width: 78px;
+  }
+
+  .sidebar-brand h3 span
+  {
+    padding: 0;
+  }
+
+  .sidebar-menu li
+  {
+    padding: 10px 0px;
+  }
+
+  .sidebar-menu li a
+  {
+    padding: 0;
+  }
+
+  .sidebar-menu li span
+  {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .sidebar-menu li a i .fas
+  {
+    margin: 0;
+  }
+
+  .sidebar .sidebar-brand h3 p ,
+  .sidebar li a p
+  {
+    display: none;
+    padding-right: 0;
+  }
+
+  .navbar
+  {
+    margin-left: 70px;
+  }
+}

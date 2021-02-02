@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <form class="register-form" action="index.html" method="post">
+      <h1>Register</h1>
+      <div class="textbox">
+        <input type="text">
+        <span data-placeholder="Name"></span>
+      </div>
+      <div class="textbox">
+        <input type="password">
+        <span data-placeholder="Password"></span>
+      </div>
+      <div class="textbox">
+        <input type="text">
+        <span data-placeholder="No. KTP"></span>
+      </div>
+      <div class="textbox">
+        <input type="text">
+        <span data-placeholder="No. HP"></span>
+      </div>
+      <div class="textbox">
+        <input type="text">
+        <span data-placeholder="Alamat"></span>
+      </div>
+      <input type="submit" class="button" value="Submit">
+      <div class="bottom-text">
+        Don't have account? <a href=""> Sign up</a>
+      </div>
+
+      <script type="text/javascript">
+        $(".textbox input").on("focus",function()
+        {
+          $(this).addClass("focus");
+        });
+        $(".textbox input").on("blur",function()
+        {
+          if($(this).val()=="")
+          {
+            $(this).removeClass("focus");
+          }
+        });
+      </script>
+    </form>
+  </body>
+</html>

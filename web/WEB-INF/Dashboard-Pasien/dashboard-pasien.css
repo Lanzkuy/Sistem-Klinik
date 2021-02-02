@@ -1,0 +1,68 @@
+/*=== GOOGLE FONTS ====*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+/*==== VARIABLES ====*/
+:root
+{
+  --bg-color: linear-gradient(120deg, #2FADFF, #7EE0FF);
+  --blue: #2FADFF;
+  --white: #FFF;
+}
+
+/*==== BASE ====*/
+*
+{
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
+  font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
+}
+
+/*==== Navbar ====*/
+.navbar
+{
+  background: var(--bg-color);
+  border-radius: 0 0 20px 20px;
+}
+
+.navbar a
+{
+  margin-left: 20px;
+}
+
+.navbar h3
+{
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: var(--white);
+}
+
+.navbar h3 span
+{
+  padding-right: 10px;
+}
+
+.row
+{
+  margin-top: 100px;
+}
+
+.card
+{
+  height: 18rem;
+  width: 25rem;
+  background: var(--bg-color);
+  border-radius: 30px
+}
+
+.card h3,span
+{
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  font-weight: bold;
+  color: var(--white);
+}
