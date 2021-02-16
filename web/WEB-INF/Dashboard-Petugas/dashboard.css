@@ -20,6 +20,29 @@
   box-sizing: border-box;
 }
 
+/*==== Main Content ====*/
+
+.main-content
+{
+  position: fixed;
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding-left: 345px;
+  transition: 0.5s;
+}
+
+.main-content .container
+{
+  margin-top: 100px;
+  height: 70vh;
+}
+
+.table
+{
+  text-align: center;
+}
+
 /*==== Sidebar ====*/
 .sidebar
 {
@@ -134,8 +157,16 @@
   padding: 0;
 }
 
-/* ===== MOBILE =====*/
 @media screen and (max-width: 1200px){
+
+  .main-content
+  {
+    position: fixed;
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding-left: 78px;
+  }
 
   .sidebar
   {
@@ -181,5 +212,13 @@
   .navbar
   {
     margin-left: 70px;
+  }
+}
+
+@media screen and (max-height: 900px) {
+  .main-content .container
+  {
+    margin-top: 70px;
+    height: 50vh;
   }
 }
