@@ -70,23 +70,53 @@ public class UserDAO {
         return listUser;
     }
     
+    public String GenerateID()
+    {
+        String query = "SELECT id_user FROM user ORDER BY id_user DESC LIMIT 1";
+        String id="US0001";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                String lastId=rs.getString("id_user");
+                String zero="";
+                String strId=lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
+                int numId=Integer.valueOf(strId)+1;
+                int idLength=String.valueOf(numId).length();
+                for (int i = 0; i < strId.length()-idLength; i++) {
+                    zero+="0";
+                }
+                id=String.valueOf(strId);
+                id="US"+zero+numId;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return id;
+    }
+    
     public void save(user_model um, String page)
     {
+        System.out.println("-INSERT/UPDATE-");
         String query=null;
         if(page.equals("update"))
         {
-            query="UPDATE user SET nama_user=?,  password=?, no_ktp=?, alamat=?, no_hp=?, id_role=? WHERE id_user=?";
+            query="CALL UPDATE_USER(?,?,?,?,?,?,?)";
         }
         else if(page.equals("insert"))
         {
-            query="INSERT INTO user (nama_user, password, no_ktp, alamat, no_hp, id_role, id_user) VALUES (?,?,?,?,?,?,?)";
+            query="CALL INSERT_USER(?,?,?,?,?,?,?)";
         }
         try
         {
             ps=conn.prepareStatement(query);
             ps.setString(1, um.getNama_user());
             ps.setString(2, um.getPassword());
-            ps.setString(3, um.getNo_hp());
+            ps.setString(3, um.getNo_ktp());
             ps.setString(4, um.getAlamat());
             ps.setString(5, um.getNo_hp());
             ps.setString(6, um.getId_role());
@@ -117,7 +147,7 @@ public class UserDAO {
         user_model um=new user_model();
         try
         {
-            String query="CALL DELETE_USER";
+            String query="CALL DELETE_USER(?)";
             ps=conn.prepareStatement(query);
             ps.setString(1, id);
             ps.executeUpdate();
@@ -128,6 +158,8 @@ public class UserDAO {
             System.out.println("Data Delete Error : "+e);
         }
     }
+    
+    
     
     public String login(String id, String password)
      {
@@ -155,7 +187,15 @@ public class UserDAO {
     public static void main(String[] args) {
         UserDAO ud=new UserDAO();
         user_model um=new user_model();
+        um.setId_user(ud.GenerateID());
+        um.setNama_user("Husky Siberia");
+        um.setPassword("whoa123");
+        um.setNo_hp("081253123");
+        um.setAlamat("Alaska");
+        um.setId_role("3");
+        um.setNo_ktp("412313123");
+        ud.save(um,"insert");
         System.out.println(ud.getData());
-        System.out.println(ud.login("0001","1234"));
+        System.out.println(ud.login("US0001","whoa1234"));
     }
 }

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import model.dokter_model;
-import model.user_model;
 
 public class DokterDAO {
     private final Connection conn;
@@ -87,8 +86,119 @@ public class DokterDAO {
         return listDokter;
     }
     
+    public String GenerateID()
+    {
+        String query = "SELECT id_dokter FROM dokter ORDER BY id_dokter DESC LIMIT 1";
+        String id="DK0001";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                String lastId=rs.getString("id_dokter");
+                String zero="";
+                String strId=lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
+                int numId=Integer.valueOf(strId)+1;
+                int idLength=String.valueOf(numId).length();
+                for (int i = 0; i < strId.length()-idLength; i++) {
+                    zero+="0";
+                }
+                id=String.valueOf(strId);
+                id="DK"+zero+numId;
+                System.out.println(numId);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return id;
+    }
+    
+    public void save(dokter_model dm, String page)
+    {
+        System.out.println("-INSERT/UPDATE-");
+        String query=null;
+        if(page.equals("update"))
+        {
+            query="CALL UPDATE_DOKTER(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        }
+        else if(page.equals("insert"))
+        {
+            query="CALL INSERT_DOKTER(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        }
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, dm.getNama_dokter());
+            ps.setString(2, dm.getTgl_lahir());
+            ps.setString(3, dm.getId_poli());
+            ps.setString(4, dm.getJenis_kelamin());
+            ps.setString(5, dm.getAlamat());
+            ps.setString(6, dm.getNo_hp());
+            ps.setString(7, dm.getNo_ktp());
+            ps.setString(8, dm.getSpecialis());
+            ps.setString(9, dm.getPassword());
+            ps.setString(10, dm.getEmail());
+            ps.setString(11, dm.getNo_npwp());
+            ps.setString(12, dm.getUser_id());
+            ps.setString(13, dm.getId_dokter());
+            ps.executeUpdate();
+            System.out.println("Insert/Update Data Success");
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println("Save Data Error : "+e);
+        }
+        finally
+        {
+            try
+            {
+                ps.close();
+            }
+            catch (SQLException e)
+            {
+              e.printStackTrace();
+            }
+        }
+    }
+    
+    public void deleteData(String id)
+    {
+        System.out.println("-DELETE-");
+        dokter_model um=new dokter_model();
+        try
+        {
+            String query="CALL DELETE_DOKTER";
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id);
+            ps.executeUpdate();
+            System.out.println("Delete Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Data Delete Error : "+e);
+        }
+    }
+    
     public static void main(String[] args) {
-        UserDAO ud=new UserDAO();
-        System.out.println(ud.getData());
+        DokterDAO dd=new DokterDAO();
+        dokter_model um=new dokter_model();
+        um.setId_dokter(dd.GenerateID());
+        um.setNama_dokter("Husky Siberia");
+        um.setTgl_lahir("2020-09-12");
+        um.setId_poli("P1");
+        um.setJenis_kelamin("L");
+        um.setAlamat("Bandung");
+        um.setNo_hp("08123412");
+        um.setNo_ktp("1241303");
+        um.setSpecialis("Telinga");
+        um.setPassword("whoa1234");
+        um.setEmail("whoas@gmail.com");
+        um.setNo_npwp("80231233");
+        um.setUser_id("US0001");
+        dd.save(um,"insert");
+        System.out.println(dd.getData());
     }
 }
