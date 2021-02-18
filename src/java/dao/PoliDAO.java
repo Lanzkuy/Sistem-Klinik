@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import model.poli_model;
 import model.supplier_model;
+import model.user_model;
 
 public class PoliDAO {
     private final Connection conn;
@@ -27,7 +28,7 @@ public class PoliDAO {
         ArrayList<poli_model> listPoli=new ArrayList<>();
         try 
         {
-            String query="SELECT *FROM poli ORDER BY id_poli";
+            String query="CALL GET_POLI";
             ps=conn.prepareStatement(query);
             rs=ps.executeQuery();
             while(rs.next())
@@ -37,9 +38,9 @@ public class PoliDAO {
                 {
                     pm.setId_poli(rs.getString("id_poli"));
                 }
-                if(rs.getString("nama_supplier").equals(""))
+                if(rs.getString("nama_poli").equals(""))
                 {
-                    pm.setNama_poli(rs.getString("nama_supplier"));
+                    pm.setNama_poli(rs.getString("nama_poli"));
                 }
                 listPoli.add(pm);
             }
@@ -51,8 +52,92 @@ public class PoliDAO {
         return listPoli;
     }
     
+    public String GenerateID()
+    {
+        String query = "SELECT id_poli FROM poli ORDER BY id_poli DESC LIMIT 1";
+        String id="P1";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                String lastId=rs.getString("id_poli");
+                String zero="";
+                String strId=lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
+                int numId=Integer.valueOf(strId)+1;
+                id="P"+numId;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return id;
+    }
+    
+    public void save(poli_model pm, String page)
+    {
+        System.out.println("-INSERT/UPDATE-");
+        String query=null;
+        if(page.equals("update"))
+        {
+            query="CALL UPDATE_POLI(?,?)";
+        }
+        else if(page.equals("insert"))
+        {
+            query="CALL INSERT_POLI(?,?)";
+        }
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, pm.getNama_poli());
+            ps.setString(2, pm.getId_poli());
+            ps.executeUpdate();
+            System.out.println("Insert/Update Data Success");
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println("Save Data Error : "+e);
+        }
+        finally
+        {
+            try
+            {
+                ps.close();
+            }
+            catch (SQLException e)
+            {
+              e.printStackTrace();
+            }
+        }
+    }
+    
+    public void deleteData(String id)
+    {
+        System.out.println("-DELETE-");
+        user_model um=new user_model();
+        try
+        {
+            String query="CALL DELETE_POLI(?)";
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id);
+            ps.executeUpdate();
+            System.out.println("Delete Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Data Delete Error : "+e);
+        }
+    }
+    
     public static void main(String[] args) {
         PoliDAO pd=new PoliDAO();
+        poli_model pm=new poli_model();
+        pm.setId_poli(pd.GenerateID());
+        pm.setNama_poli("Gigi");
+        pd.save(pm, "insert");
+        //pd.deleteData("P3");
         System.out.println(pd.getData());
     }
 }

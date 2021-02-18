@@ -7,14 +7,14 @@ public class supplier_model {
     private String no_telepon;
     private String email;
     private String user_id;
-    private  String waktu;
+    private  String created_at;
 
-    public String getWaktu() {
-        return waktu;
+    public String getCreatedAt() {
+        return created_at;
     }
 
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
+    public void setCreatedAt(String created_at) {
+        this.created_at = created_at;
     }
 
     public String getId_supplier() {

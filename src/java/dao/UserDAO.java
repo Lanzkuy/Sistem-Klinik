@@ -159,8 +159,6 @@ public class UserDAO {
         }
     }
     
-    
-    
     public String login(String id, String password)
      {
          System.out.println("-LOGIN-");
@@ -187,14 +185,15 @@ public class UserDAO {
     public static void main(String[] args) {
         UserDAO ud=new UserDAO();
         user_model um=new user_model();
-        um.setId_user(ud.GenerateID());
+        um.setId_user("US0003");
         um.setNama_user("Husky Siberia");
         um.setPassword("whoa123");
         um.setNo_hp("081253123");
-        um.setAlamat("Alaska");
+        um.setAlamat("Alaskaaa");
         um.setId_role("3");
         um.setNo_ktp("412313123");
-        ud.save(um,"insert");
+        ud.save(um,"update");
+        ud.deleteData("US0003");
         System.out.println(ud.getData());
         System.out.println(ud.login("US0001","whoa1234"));
     }

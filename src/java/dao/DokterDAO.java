@@ -104,9 +104,7 @@ public class DokterDAO {
                 for (int i = 0; i < strId.length()-idLength; i++) {
                     zero+="0";
                 }
-                id=String.valueOf(strId);
                 id="DK"+zero+numId;
-                System.out.println(numId);
             }
         }
         catch(SQLException e)
@@ -167,10 +165,9 @@ public class DokterDAO {
     public void deleteData(String id)
     {
         System.out.println("-DELETE-");
-        dokter_model um=new dokter_model();
         try
         {
-            String query="CALL DELETE_DOKTER";
+            String query="CALL DELETE_PASIEN(?)";
             ps=conn.prepareStatement(query);
             ps.setString(1, id);
             ps.executeUpdate();
@@ -185,8 +182,8 @@ public class DokterDAO {
     public static void main(String[] args) {
         DokterDAO dd=new DokterDAO();
         dokter_model um=new dokter_model();
-        um.setId_dokter(dd.GenerateID());
-        um.setNama_dokter("Husky Siberia");
+        um.setId_dokter("DK0003");
+        um.setNama_dokter("Husky");
         um.setTgl_lahir("2020-09-12");
         um.setId_poli("P1");
         um.setJenis_kelamin("L");
@@ -198,7 +195,8 @@ public class DokterDAO {
         um.setEmail("whoas@gmail.com");
         um.setNo_npwp("80231233");
         um.setUser_id("US0001");
-        dd.save(um,"insert");
+        dd.save(um,"update");
+        //dd.deleteData("DK0002");
         System.out.println(dd.getData());
     }
 }

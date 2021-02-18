@@ -7,76 +7,93 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import model.pasien_model;
 import model.supplier_model;
 
-public class SupplierDAO {
+public class PasienDAO {
     private final Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
     private SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
     
-    public SupplierDAO()
+    public PasienDAO()
     {
         conn=DatabaseConnection.connection();
     }
     
-    public ArrayList<supplier_model> getData()
+    public ArrayList<pasien_model> getData()
     {
         System.out.println("-GET-");
-        ArrayList<supplier_model> listSupplier=new ArrayList<>();
+        ArrayList<pasien_model> listPasien=new ArrayList<>();
         try 
         {
-            String query="SELECT *FROM supplier ORDER BY id_supplier";
+            String query="CALL GET_PASIEN";
             ps=conn.prepareStatement(query);
             rs=ps.executeQuery();
             while(rs.next())
             {
-                supplier_model sm=new supplier_model(); 
-                if(rs.getString("id_supplier").equals(""))
+                pasien_model sm=new pasien_model(); 
+                if(rs.getString("id_pasien").equals(""))
                 {
-                    sm.setId_supplier(rs.getString("id_supplier"));
+                    sm.setId_pasien(rs.getString("id_pasien"));
                 }
-                if(rs.getString("nama_supplier").equals(""))
+                if(rs.getString("nama_pasien").equals(""))
                 {
-                    sm.setNama_supplier(rs.getString("nama_supplier"));
+                    sm.setNama_pasien(rs.getString("nama_pasien"));
+                }
+                if(rs.getString("tgl_lahir").equals(""))
+                {
+                    sm.setTgl_lahir(rs.getString("tgl_lahir"));
+                }
+                if(rs.getString("jenis_kelamin").equals(""))
+                {
+                    sm.setJenis_kelamin(rs.getString("jenis_kelamin"));
+                }
+                if(rs.getString("no_ktp").equals(""))
+                {
+                    sm.setNo_ktp(rs.getString("no_ktp"));
                 }
                 if(rs.getString("alamat").equals(""))
                 {
                     sm.setAlamat(rs.getString("alamat"));
                 }
-                if(rs.getString("no_telepon").equals(""))
+                if(rs.getString("no_hp").equals(""))
                 {
-                    sm.setNo_telepon(rs.getString("no_telepon"));
+                    sm.setNo_hp(rs.getString("no_hp"));
                 }
-                if(rs.getString("email").equals(""))
+                if(rs.getString("gol_darah").equals(""))
                 {
-                    sm.setEmail(rs.getString("email"));
+                    sm.setGol_darah(rs.getString("gol_darah"));
+                }
+                if(rs.getString("password").equals(""))
+                {
+                    sm.setPassword(rs.getString("password"));
                 }
                 if(rs.getString("user_id").equals(""))
                 {
                     sm.setUser_id(rs.getString("user_id"));
                 }
-                listSupplier.add(sm);
+                listPasien.add(sm);
             }
         } 
         catch (SQLException e) 
         {
             System.out.println(e);
         }
-        return listSupplier;
+        return listPasien;
     }
     
     public String GenerateID()
     {
-        String query = "SELECT id_supplier FROM supplier ORDER BY id_supplier DESC LIMIT 1";
-        String id="SP0001";
+        String query = "SELECT id_pasien FROM pasien ORDER BY id_pasien DESC LIMIT 1";
+        String id="PS0001";
         try
         {
             ps=conn.prepareStatement(query);
             rs=ps.executeQuery();
             if(rs.next())
             {
-                String lastId=rs.getString("id_supplier");
+                String lastId=rs.getString("id_pasien");
                 String zero="";
                 String strId=lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
                 int numId=Integer.valueOf(strId)+1;
@@ -84,7 +101,7 @@ public class SupplierDAO {
                 for (int i = 0; i < strId.length()-idLength; i++) {
                     zero+="0";
                 }
-                id="SP"+zero+numId;
+                id="PS"+zero+numId;
             }
         }
         catch(SQLException e)
@@ -94,27 +111,31 @@ public class SupplierDAO {
         return id;
     }
     
-    public void save(supplier_model sm, String page)
+    public void save(pasien_model pm, String page)
     {
         System.out.println("-INSERT/UPDATE-");
         String query=null;
         if(page.equals("update"))
         {
-            query="CALL UPDATE_SUPPLIER(?,?,?,?,?,?)";
+            query="CALL UPDATE_PASIEN(?,?,?,?,?,?,?,?,?,?)";
         }
         else if(page.equals("insert"))
         {
-            query="CALL INSERT_SUPPLIER(?,?,?,?,?,?)";
+            query="CALL INSERT_PASIEN(?,?,?,?,?,?,?,?,?,?)";
         }
         try
         {
             ps=conn.prepareStatement(query);
-            ps.setString(1, sm.getNama_supplier());
-            ps.setString(2, sm.getAlamat());
-            ps.setString(3, sm.getNo_telepon());
-            ps.setString(4, sm.getEmail());
-            ps.setString(5, sm.getUser_id());
-            ps.setString(6, sm.getId_supplier());
+            ps.setString(1, pm.getNama_pasien());
+            ps.setString(2, pm.getTgl_lahir());
+            ps.setString(3, pm.getJenis_kelamin());
+            ps.setString(4, pm.getNo_ktp());
+            ps.setString(5, pm.getAlamat());
+            ps.setString(6, pm.getNo_hp());
+            ps.setString(7, pm.getGol_darah());
+            ps.setString(8, pm.getPassword());
+            ps.setString(9, pm.getUser_id());
+            ps.setString(10, pm.getId_pasien());
             ps.executeUpdate();
             System.out.println("Insert/Update Data Success");
         } 
@@ -140,7 +161,7 @@ public class SupplierDAO {
         System.out.println("-DELETE-");
         try
         {
-            String query="CALL DELETE_SUPPLIER(?)";
+            String query="CALL DELETE_PASIEN(?)";
             ps=conn.prepareStatement(query);
             ps.setString(1, id);
             ps.executeUpdate();
@@ -153,16 +174,20 @@ public class SupplierDAO {
     }
     
     public static void main(String[] args) {
-        SupplierDAO sd=new SupplierDAO();
-        supplier_model sm=new supplier_model();
-        sm.setId_supplier("SP0002");
-        sm.setNama_supplier("HIKARI");
-        sm.setAlamat("Jakarta");
-        sm.setNo_telepon("091273213");
-        sm.setEmail("hikarimart@gmail.com");
-        sm.setUser_id("US0001");
-        sd.save(sm, "update");
-        sd.deleteData("SP0001");
-        System.out.println(sd.getData());
+        PasienDAO pd=new PasienDAO();
+        pasien_model pm=new pasien_model();
+        pm.setId_pasien(pd.GenerateID());
+        pm.setNama_pasien("Leon Kennedy");
+        pm.setTgl_lahir("03-05-13");
+        pm.setJenis_kelamin("L");
+        pm.setNo_ktp("24718223");
+        pm.setAlamat("Jakarta");
+        pm.setNo_hp("082613312");
+        pm.setGol_darah("A");
+        pm.setPassword("whoa1234");
+        pm.setUser_id("US0004");
+        pd.save(pm, "update");
+        pd.deleteData("PS0002");
+        System.out.println(pd.getData());
     }
 }
