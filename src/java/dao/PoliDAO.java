@@ -44,6 +44,7 @@ public class PoliDAO {
                 }
                 listPoli.add(pm);
             }
+            System.out.println("Get Data Success");
         } 
         catch (SQLException e) 
         {
@@ -131,13 +132,44 @@ public class PoliDAO {
         }
     }
     
+    public poli_model getPoliById(String id_poli)
+    {
+        System.out.println("-BY ID-");
+        poli_model pm=new poli_model();
+        String query="CALL BYID_POLI(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_poli);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(rs.getString("id_poli").equals(""))
+                {
+                    pm.setId_poli(rs.getString("id_poli"));
+                }
+                if(rs.getString("nama_poli").equals(""))
+                {
+                    pm.setNama_poli(rs.getString("nama_poli"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return pm;
+    }
+    
     public static void main(String[] args) {
         PoliDAO pd=new PoliDAO();
         poli_model pm=new poli_model();
         pm.setId_poli(pd.GenerateID());
         pm.setNama_poli("Gigi");
-        pd.save(pm, "insert");
+        //pd.save(pm, "insert");
         //pd.deleteData("P3");
+        System.out.println(pd.getPoliById("P1"));
         System.out.println(pd.getData());
     }
 }

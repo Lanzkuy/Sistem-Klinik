@@ -6,7 +6,6 @@ public class bayar_obat_model {
     private String id_pasien;
     private String id_resep;
     private String jenis_pembayaran;
-    private String waktu;
     private String user_id;
 
     public String getId_pembayaran() {
@@ -47,14 +46,6 @@ public class bayar_obat_model {
 
     public void setJenis_pembayaran(String jenis_pembayaran) {
         this.jenis_pembayaran = jenis_pembayaran;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 
     public String getUser_id() {

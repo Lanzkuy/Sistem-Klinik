@@ -5,7 +5,6 @@ public class detail_resep_model {
     private String id_obat;
     private String keterangan;
     private String user_id;
-    private String waktu;
     private double harga;
     private double jumlah;
 
@@ -39,14 +38,6 @@ public class detail_resep_model {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 
     public double getHarga() {

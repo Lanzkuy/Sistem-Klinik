@@ -10,7 +10,6 @@ public class rekam_medik_model {
     private String id_dokter;
     private String id_resep;
     private String diagnosa;
-    private String waktu;
     private String user;
     private double berat;
     private double tinggi;
@@ -94,15 +93,7 @@ public class rekam_medik_model {
     public void setDiagnosa(String diagnosa) {
         this.diagnosa = diagnosa;
     }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
-    }
-
+    
     public String getUser() {
         return user;
     }

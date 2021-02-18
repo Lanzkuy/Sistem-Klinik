@@ -9,7 +9,6 @@ public class pembelian_obat_model {
     private String keterangan;
     private String tgl_expired;
     private String id_user;
-    private String waktu;
     private double harga_beli;
     private double jumlah;
 
@@ -75,14 +74,6 @@ public class pembelian_obat_model {
 
     public void setId_user(String id_user) {
         this.id_user = id_user;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 
     public double getHarga_beli() {

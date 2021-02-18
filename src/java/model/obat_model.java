@@ -5,7 +5,6 @@ public class obat_model {
     private String nama_obat;
     private String satuan;
     private String no_faktur;
-    private String waktu;
     private String user_id;
     private double harga_jual;
     private double stok; 
@@ -40,14 +39,6 @@ public class obat_model {
 
     public void setNo_faktur(String no_faktur) {
         this.no_faktur = no_faktur;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 
     public String getUser_id() {

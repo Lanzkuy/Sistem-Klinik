@@ -32,48 +32,48 @@ public class PasienDAO {
             rs=ps.executeQuery();
             while(rs.next())
             {
-                pasien_model sm=new pasien_model(); 
+                pasien_model pm=new pasien_model(); 
                 if(rs.getString("id_pasien").equals(""))
                 {
-                    sm.setId_pasien(rs.getString("id_pasien"));
+                    pm.setId_pasien(rs.getString("id_pasien"));
                 }
                 if(rs.getString("nama_pasien").equals(""))
                 {
-                    sm.setNama_pasien(rs.getString("nama_pasien"));
+                    pm.setNama_pasien(rs.getString("nama_pasien"));
                 }
                 if(rs.getString("tgl_lahir").equals(""))
                 {
-                    sm.setTgl_lahir(rs.getString("tgl_lahir"));
+                    pm.setTgl_lahir(rs.getString("tgl_lahir"));
                 }
                 if(rs.getString("jenis_kelamin").equals(""))
                 {
-                    sm.setJenis_kelamin(rs.getString("jenis_kelamin"));
+                    pm.setJenis_kelamin(rs.getString("jenis_kelamin"));
                 }
                 if(rs.getString("no_ktp").equals(""))
                 {
-                    sm.setNo_ktp(rs.getString("no_ktp"));
+                    pm.setNo_ktp(rs.getString("no_ktp"));
                 }
                 if(rs.getString("alamat").equals(""))
                 {
-                    sm.setAlamat(rs.getString("alamat"));
+                    pm.setAlamat(rs.getString("alamat"));
                 }
                 if(rs.getString("no_hp").equals(""))
                 {
-                    sm.setNo_hp(rs.getString("no_hp"));
+                    pm.setNo_hp(rs.getString("no_hp"));
                 }
                 if(rs.getString("gol_darah").equals(""))
                 {
-                    sm.setGol_darah(rs.getString("gol_darah"));
+                    pm.setGol_darah(rs.getString("gol_darah"));
                 }
                 if(rs.getString("password").equals(""))
                 {
-                    sm.setPassword(rs.getString("password"));
+                    pm.setPassword(rs.getString("password"));
                 }
                 if(rs.getString("user_id").equals(""))
                 {
-                    sm.setUser_id(rs.getString("user_id"));
+                    pm.setUser_id(rs.getString("user_id"));
                 }
-                listPasien.add(sm);
+                listPasien.add(pm);
             }
         } 
         catch (SQLException e) 
@@ -173,6 +173,68 @@ public class PasienDAO {
         }
     }
     
+    public pasien_model getPasienById(String id_pasien)
+    {
+        System.out.println("-BY ID-");
+        pasien_model pm=new pasien_model();
+        String query="CALL BYID_PASIEN(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_pasien);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(rs.getString("id_pasien").equals(""))
+                {
+                    pm.setId_pasien(rs.getString("id_pasien"));
+                }
+                if(rs.getString("nama_pasien").equals(""))
+                {
+                    pm.setNama_pasien(rs.getString("nama_pasien"));
+                }
+                if(rs.getString("tgl_lahir").equals(""))
+                {
+                    pm.setTgl_lahir(rs.getString("tgl_lahir"));
+                }
+                if(rs.getString("jenis_kelamin").equals(""))
+                {
+                    pm.setJenis_kelamin(rs.getString("jenis_kelamin"));
+                }
+                if(rs.getString("no_ktp").equals(""))
+                {
+                    pm.setNo_ktp(rs.getString("no_ktp"));
+                }
+                if(rs.getString("alamat").equals(""))
+                {
+                    pm.setAlamat(rs.getString("alamat"));
+                }
+                if(rs.getString("no_hp").equals(""))
+                {
+                    pm.setNo_hp(rs.getString("no_hp"));
+                }
+                if(rs.getString("gol_darah").equals(""))
+                {
+                    pm.setGol_darah(rs.getString("gol_darah"));
+                }
+                if(rs.getString("password").equals(""))
+                {
+                    pm.setPassword(rs.getString("password"));
+                }
+                if(rs.getString("user_id").equals(""))
+                {
+                    pm.setUser_id(rs.getString("user_id"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return pm;
+    }
+    
     public static void main(String[] args) {
         PasienDAO pd=new PasienDAO();
         pasien_model pm=new pasien_model();
@@ -186,8 +248,9 @@ public class PasienDAO {
         pm.setGol_darah("A");
         pm.setPassword("whoa1234");
         pm.setUser_id("US0004");
-        pd.save(pm, "update");
-        pd.deleteData("PS0002");
+        //pd.save(pm, "update");
+        //pd.deleteData("PS0002");
+        System.out.println(pd.getPasienById("PS0001"));
         System.out.println(pd.getData());
     }
 }

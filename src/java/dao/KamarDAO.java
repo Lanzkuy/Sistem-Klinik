@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import koneksi.DatabaseConnection;
+import connection.DatabaseConnection;
 import model.kamar_model;
 
 /**
@@ -78,7 +78,6 @@ public class KamarDAO {
                 }
                 listKamar.add(km);
             }
-            System.out.println("GET data berhasil..");
         }
         catch (SQLException e) 
         {

@@ -182,6 +182,56 @@ public class UserDAO {
         return "Login Failed (Wrong Username or Password)";
      }
     
+    public user_model getUserById(String id_user)
+    {
+        System.out.println("-BY ID-");
+        user_model km=new user_model();
+        String query="CALL BYID_USER(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_user);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(rs.getString("id_user").equals(""))
+                {
+                    km.setId_user(rs.getString("id_user"));
+                }
+                if(rs.getString("nama_user").equals(""))
+                {
+                    km.setNama_user(rs.getString("nama_user"));
+                }
+                if(rs.getString("password").equals(""))
+                {
+                    km.setPassword(rs.getString("password"));
+                }
+                if(rs.getString("no_ktp").equals(""))
+                {
+                    km.setNo_ktp(rs.getString("no_ktp"));
+                }
+                if(rs.getString("alamat").equals(""))
+                {
+                    km.setAlamat(rs.getString("alamat"));
+                }
+                if(rs.getString("no_hp").equals(""))
+                {
+                    km.setNo_hp(rs.getString("no_hp"));
+                }
+                if(rs.getString("id_role").equals(""))
+                {
+                    km.setId_role(rs.getString("id_role"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return km;
+    }
+    
     public static void main(String[] args) {
         UserDAO ud=new UserDAO();
         user_model um=new user_model();
@@ -192,8 +242,9 @@ public class UserDAO {
         um.setAlamat("Alaskaaa");
         um.setId_role("3");
         um.setNo_ktp("412313123");
-        ud.save(um,"update");
-        ud.deleteData("US0003");
+        //ud.save(um,"update");
+       // ud.deleteData("US0003");
+        System.out.println(ud.getUserById("US0001"));
         System.out.println(ud.getData());
         System.out.println(ud.login("US0001","whoa1234"));
     }

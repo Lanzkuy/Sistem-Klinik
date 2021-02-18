@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import koneksi.DatabaseConnection;
+import connection.DatabaseConnection;
 import model.karyawan_model;
 
 /**
@@ -69,11 +69,8 @@ public class KaryawanDAO {
                 if (rs.getString("user_id").equals("")) {
                     km.setUser_id(rs.getString("user_id"));
                 }
-                
-            listKaryawan.add(km);
-            
+                listKaryawan.add(km);
             }
-            System.out.println("Get Data Berhasil...");
         }
         catch (SQLException e) 
         {

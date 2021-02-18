@@ -78,6 +78,7 @@ public class DokterDAO {
                 }
                 listDokter.add(dm);
             }
+            System.out.println("Get Data Success");
         } 
         catch (SQLException e) 
         {
@@ -179,6 +180,72 @@ public class DokterDAO {
         }
     }
     
+    public dokter_model getDokterById(String id_dokter)
+    {
+        System.out.println("-BY ID-");
+        dokter_model dm=new dokter_model();
+        String query="CALL BYID_DOKTER(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_dokter);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(rs.getString("id_dokter").equals(""))
+                {
+                    dm.setId_dokter(rs.getString("id_dokter"));
+                }
+                if(rs.getString("nama_dokter").equals(""))
+                {
+                    dm.setNama_dokter(rs.getString("tmplahir"));
+                }
+                if(rs.getDate("tgl_lahir").equals(""))
+                {
+                    dm.setTgl_lahir((sdf.format(rs.getDate("tgl_lahir")).toString()));
+                }
+                if(rs.getString("id_poli").equals(""))
+                {
+                    dm.setId_poli(rs.getString("id_poli"));
+                }
+                if(rs.getString("jenis_kelamin").equals(""))
+                {
+                    dm.setJenis_kelamin(rs.getString("jenis_kelamin"));
+                }
+                if(rs.getString("no_hp").equals(""))
+                {
+                    dm.setNo_hp(rs.getString("no_hp"));
+                }
+                if(rs.getString("spesialis").equals(""))
+                {
+                    dm.setSpecialis(rs.getString("spesialis"));
+                }
+                if(rs.getString("password").equals(""))
+                {
+                    dm.setPassword(rs.getString("password"));
+                }
+                if(rs.getString("email").equals(""))
+                {
+                    dm.setEmail(rs.getString("email"));
+                }
+                if(rs.getString("no_npwp").equals(""))
+                {
+                    dm.setNo_npwp(rs.getString("no_npwp"));
+                }
+                if(rs.getString("user_id").equals(""))
+                {
+                    dm.setUser_id(rs.getString("user_id"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return dm;
+    }
+    
     public static void main(String[] args) {
         DokterDAO dd=new DokterDAO();
         dokter_model um=new dokter_model();
@@ -195,8 +262,9 @@ public class DokterDAO {
         um.setEmail("whoas@gmail.com");
         um.setNo_npwp("80231233");
         um.setUser_id("US0001");
-        dd.save(um,"update");
+        //dd.save(um,"update");
         //dd.deleteData("DK0002");
+        System.out.println(dd.getDokterById("DK0001"));
         System.out.println(dd.getData());
     }
 }

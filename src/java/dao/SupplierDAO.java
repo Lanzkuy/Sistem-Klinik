@@ -58,6 +58,7 @@ public class SupplierDAO {
                 }
                 listSupplier.add(sm);
             }
+            System.out.println("Get Data Success");
         } 
         catch (SQLException e) 
         {
@@ -152,6 +153,52 @@ public class SupplierDAO {
         }
     }
     
+    public supplier_model getSupplierById(String id_supplier)
+    {
+        System.out.println("-BY ID-");
+        supplier_model sm=new supplier_model();
+        String query="CALL BYID_SUPPLIER(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_supplier);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(rs.getString("id_supplier").equals(""))
+                {
+                    sm.setId_supplier(rs.getString("id_supplier"));
+                }
+                if(rs.getString("nama_supplier").equals(""))
+                {
+                    sm.setNama_supplier(rs.getString("nama_supplier"));
+                }
+                if(rs.getString("alamat").equals(""))
+                {
+                    sm.setAlamat(rs.getString("alamat"));
+                }
+                if(rs.getString("no_telepon").equals(""))
+                {
+                    sm.setNo_telepon(rs.getString("no_telepon"));
+                }
+                if(rs.getString("email").equals(""))
+                {
+                    sm.setEmail(rs.getString("email"));
+                }
+                if(rs.getString("user_id").equals(""))
+                {
+                    sm.setUser_id(rs.getString("user_id"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return sm;
+    }
+    
     public static void main(String[] args) {
         SupplierDAO sd=new SupplierDAO();
         supplier_model sm=new supplier_model();
@@ -161,8 +208,9 @@ public class SupplierDAO {
         sm.setNo_telepon("091273213");
         sm.setEmail("hikarimart@gmail.com");
         sm.setUser_id("US0001");
-        sd.save(sm, "update");
-        sd.deleteData("SP0001");
+        //sd.save(sm, "update");
+        //sd.deleteData("SP0001");
+        System.out.println(sd.getSupplierById("SP0001"));
         System.out.println(sd.getData());
     }
 }

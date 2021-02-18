@@ -7,15 +7,6 @@ public class supplier_model {
     private String no_telepon;
     private String email;
     private String user_id;
-    private  String created_at;
-
-    public String getCreatedAt() {
-        return created_at;
-    }
-
-    public void setCreatedAt(String created_at) {
-        this.created_at = created_at;
-    }
 
     public String getId_supplier() {
         return id_supplier;

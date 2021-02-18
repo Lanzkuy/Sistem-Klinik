@@ -43,8 +43,6 @@ public class LayananDAO {
                 }
                 listlayanan.add(lm);
             }
-            System.out.println("Get Data Success");
-            System.out.println("--------------------------");
         }
         
         catch (SQLException e) 
@@ -70,8 +68,6 @@ public class LayananDAO {
 //            }
 //            return lm;
 //        }
-    
-
     
     public void save(layanan_model lm, String page)
     {

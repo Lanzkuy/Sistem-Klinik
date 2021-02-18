@@ -51,7 +51,6 @@ public class DetailLayananDAO {
                 }
                 listdetaillayanan.add(dlm);
             }
-            System.out.println("Get Data Success");
         }
         catch (SQLException e) 
         {

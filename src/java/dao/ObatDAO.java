@@ -57,8 +57,6 @@ public class ObatDAO {
                 }
                 listobat.add(om);
             }
-            System.out.println("Get Data Success");
-            System.out.println("--------------------------");
         }
         
         catch (SQLException e) 
@@ -68,7 +66,6 @@ public class ObatDAO {
         return listobat;
     
     }
-    //id_obat, nama_obat, satuan, stok, harga_jual, no_faktur, user_id
     
     public void save(obat_model om, String page)
     {

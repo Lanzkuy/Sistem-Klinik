@@ -12,7 +12,6 @@ public class karyawan_model {
     private String email;
     private String no_npwp;
     private String user_id;
-    private String waktu;
 
     public String getId_karyawan() {
         return id_karyawan;
@@ -100,13 +99,5 @@ public class karyawan_model {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 }

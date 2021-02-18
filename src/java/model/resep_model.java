@@ -6,17 +6,7 @@ public class resep_model {
     private String tgl_resep;
     private String id_poli;
     private String user_id;
-    private  String waktu;
 
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
-    }
-    
     public String getId_resep() {
         return id_resep;
     }

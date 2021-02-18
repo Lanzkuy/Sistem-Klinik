@@ -7,7 +7,6 @@ public class pendaftaran_model {
     private String tgl_daftar;
     private String keterangan;
     private String user_id;
-    private String waktu;
 
     public String getNo_antrian() {
         return no_antrian;
@@ -55,13 +54,5 @@ public class pendaftaran_model {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 }

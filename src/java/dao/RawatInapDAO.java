@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import koneksi.DatabaseConnection;
+import connection.DatabaseConnection;
 import model.rawat_inap_model;
 
 /**

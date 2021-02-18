@@ -11,7 +11,6 @@ public class pasien_model {
     private String gol_darah;
     private String password;
     private String user_id;
-    private String waktu;
 
     public String getId_pasien() {
         return id_pasien;
@@ -91,13 +90,5 @@ public class pasien_model {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public String getWaktu() {
-        return waktu;
-    }
-
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
     }
 }
