@@ -6,6 +6,10 @@ public class resep_model {
     private String tgl_resep;
     private String id_poli;
     private String user_id;
+    private String id_obat;
+    private String keterangan;
+    private double harga;
+    private double jumlah;
 
     public String getId_resep() {
         return id_resep;
@@ -13,6 +17,46 @@ public class resep_model {
 
     public void setId_resep(String id_resep) {
         this.id_resep = id_resep;
+    }
+
+    public String getId_obat() {
+        return id_obat;
+    }
+
+    public void setId_obat(String id_obat) {
+        this.id_obat = id_obat;
+    }
+
+    public String getKeterangan() {
+        return keterangan;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public double getHarga() {
+        return harga;
+    }
+
+    public void setHarga(double harga) {
+        this.harga = harga;
+    }
+
+    public double getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(double jumlah) {
+        this.jumlah = jumlah;
     }
 
     public String getId_dokter() {
@@ -39,11 +83,4 @@ public class resep_model {
         this.id_poli = id_poli;
     }
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
 }

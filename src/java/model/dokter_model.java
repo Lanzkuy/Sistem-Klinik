@@ -14,6 +14,15 @@ public class dokter_model {
     private String email;
     private String no_npwp;
     private String user_id;
+    private String nama_user;
+
+    public String getNama_user() {
+        return nama_user;
+    }
+
+    public void setNama_user(String nama_user) {
+        this.nama_user = nama_user;
+    }
 
     public String getId_dokter() {
         return id_dokter;

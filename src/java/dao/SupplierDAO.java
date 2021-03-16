@@ -26,33 +26,33 @@ public class SupplierDAO {
         ArrayList<supplier_model> listSupplier=new ArrayList<>();
         try 
         {
-            String query="SELECT *FROM supplier ORDER BY id_supplier";
+            String query="CALL GET_SUPPLIER";
             ps=conn.prepareStatement(query);
             rs=ps.executeQuery();
             while(rs.next())
             {
                 supplier_model sm=new supplier_model(); 
-                if(rs.getString("id_supplier").equals(""))
+                if(!rs.getString("id_supplier").equals(""))
                 {
                     sm.setId_supplier(rs.getString("id_supplier"));
                 }
-                if(rs.getString("nama_supplier").equals(""))
+                if(!rs.getString("nama_supplier").equals(""))
                 {
                     sm.setNama_supplier(rs.getString("nama_supplier"));
                 }
-                if(rs.getString("alamat").equals(""))
+                if(!rs.getString("alamat").equals(""))
                 {
                     sm.setAlamat(rs.getString("alamat"));
                 }
-                if(rs.getString("no_telepon").equals(""))
+                if(!rs.getString("no_telepon").equals(""))
                 {
                     sm.setNo_telepon(rs.getString("no_telepon"));
                 }
-                if(rs.getString("email").equals(""))
+                if(!rs.getString("email").equals(""))
                 {
                     sm.setEmail(rs.getString("email"));
                 }
-                if(rs.getString("user_id").equals(""))
+                if(!rs.getString("user_id").equals(""))
                 {
                     sm.setUser_id(rs.getString("user_id"));
                 }
@@ -149,7 +149,7 @@ public class SupplierDAO {
         }
         catch(SQLException e)
         {
-            System.out.println("Data Delete Error : "+e);
+            System.out.println("Delete Data Error : "+e);
         }
     }
     
@@ -165,27 +165,27 @@ public class SupplierDAO {
             rs=ps.executeQuery();
             if(rs.next())
             {
-                if(rs.getString("id_supplier").equals(""))
+                if(!rs.getString("id_supplier").equals(""))
                 {
                     sm.setId_supplier(rs.getString("id_supplier"));
                 }
-                if(rs.getString("nama_supplier").equals(""))
+                if(!rs.getString("nama_supplier").equals(""))
                 {
                     sm.setNama_supplier(rs.getString("nama_supplier"));
                 }
-                if(rs.getString("alamat").equals(""))
+                if(!rs.getString("alamat").equals(""))
                 {
                     sm.setAlamat(rs.getString("alamat"));
                 }
-                if(rs.getString("no_telepon").equals(""))
+                if(!rs.getString("no_telepon").equals(""))
                 {
                     sm.setNo_telepon(rs.getString("no_telepon"));
                 }
-                if(rs.getString("email").equals(""))
+                if(!rs.getString("email").equals(""))
                 {
                     sm.setEmail(rs.getString("email"));
                 }
-                if(rs.getString("user_id").equals(""))
+                if(!rs.getString("user_id").equals(""))
                 {
                     sm.setUser_id(rs.getString("user_id"));
                 }

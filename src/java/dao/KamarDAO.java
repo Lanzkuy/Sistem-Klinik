@@ -40,39 +40,39 @@ public class KamarDAO {
             rs = ps.executeQuery();
             while(rs.next()){
                 kamar_model km = new kamar_model();
-                if(rs.getString("id_kamar").equals(""))
+                if(!rs.getString("id_kamar").equals(""))
                 {
                     km.setId_kamar(rs.getString("id_kamar"));
                 }
-                if(rs.getString("nama_ruang").equals(""))
+                if(!rs.getString("nama_ruang").equals(""))
                 {
                     km.setNama_kamar(rs.getString("nama_ruang"));
                 }
-                if(rs.getString("no_kamar").equals(""))
+                if(!rs.getString("no_kamar").equals(""))
                 {
                     km.setNo_kamar(rs.getString("no_kamar"));
                 }
-                if(rs.getString("kelas").equals(""))
+                if(!rs.getString("kelas").equals(""))
                 {
                     km.setKelas(rs.getString("kelas"));
                 }
-                if(rs.getString("harga_perhari").equals(""))
+                if(!rs.getString("harga_perhari").equals(""))
                 {
                     km.setHarga_perhari(rs.getDouble("harga_perhari"));
                 }
-                if(rs.getString("des_kamar").equals(""))
+                if(!rs.getString("des_kamar").equals(""))
                 {
                     km.setDes_kamar(rs.getString("des_kamar"));
                 }
-                if(rs.getString("kapasitas").equals(""))
+                if(!rs.getString("kapasitas").equals(""))
                 {
                     km.setKapasitas(rs.getInt("kapasitas"));
                 }
-                if(rs.getString("terisi").equals(""))
+                if(!rs.getString("terisi").equals(""))
                 {
                     km.setTerisi(rs.getInt("terisi"));
                 }
-                if(rs.getString("status").equals(""))
+                if(!rs.getString("status").equals(""))
                 {
                     km.setStatus(rs.getString("status"));
                 }
@@ -157,27 +157,84 @@ public class KamarDAO {
             System.out.println("Berhasil Hapus Data");
         }
         catch(SQLException e){
-            System.out.println("Gagal Hapus Data : "+e);
+            System.out.println("Delete Data Error : "+e);
         }
     }
     
-    
-    
+    public kamar_model getKamarById(String id_kamar)
+    {
+        System.out.println("-BY ID-");
+        kamar_model km=new kamar_model();
+        String query="CALL BYID_KAMAR(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_kamar);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(!rs.getString("id_kamar").equals(""))
+                {
+                    km.setId_kamar(rs.getString("id_kamar"));
+                }
+                if(!rs.getString("nama_ruang").equals(""))
+                {
+                    km.setNama_kamar(rs.getString("nama_ruang"));
+                }
+                if(!rs.getString("no_kamar").equals(""))
+                {
+                    km.setNo_kamar(rs.getString("no_kamar"));
+                }
+                if(!rs.getString("kelas").equals(""))
+                {
+                    km.setKelas(rs.getString("kelas"));
+                }
+                if(!rs.getString("harga_perhari").equals(""))
+                {
+                    km.setHarga_perhari(rs.getDouble("harga_perhari"));
+                }
+                if(!rs.getString("des_kamar").equals(""))
+                {
+                    km.setDes_kamar(rs.getString("des_kamar"));
+                }
+                if(!rs.getString("kapasitas").equals(""))
+                {
+                    km.setKapasitas(rs.getInt("kapasitas"));
+                }
+                if(!rs.getString("terisi").equals(""))
+                {
+                    km.setTerisi(rs.getInt("terisi"));
+                }
+                if(!rs.getString("status").equals(""))
+                {
+                    km.setStatus(rs.getString("status"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return km;
+    }
     
     public static void main(String[] args) {
         // TODO code application logic here
         KamarDAO kd = new KamarDAO();
         kamar_model km = new kamar_model();
         km.setId_kamar(kd.GenerateId());
-        km.setNama_kamar("Kamboja");
+        km.setNama_kamar("Mawar");
         km.setNo_kamar("001");
         km.setKelas("VIP");
         km.setHarga_perhari(10000);
         km.setDes_kamar("Tidak Ada");
         km.setKapasitas(2);
         km.setTerisi(1);
-        km.setStatus("OK");
-        kd.add(km, "add");
+        km.setStatus("Available");
+        //kd.add(km, "add");
+        //kd.deleteData("KMR001");
+        System.out.println(kd.getKamarById("KMR001"));
         System.out.println(kd.getData());
     }
     

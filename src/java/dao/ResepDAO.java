@@ -11,7 +11,7 @@ import model.resep_model;
 public class ResepDAO {
     private Connection conn;
     private PreparedStatement ps;
-    private ResultSet rs;
+    private ResultSet rs;   
     
     public ResepDAO()
     {
@@ -26,19 +26,19 @@ public class ResepDAO {
             rs=ps.executeQuery();
             while(rs.next()){
                 resep_model rm = new resep_model();
-                if (rs.getString("id_resep").equals("")) {
+                if (!rs.getString("id_resep").equals("")) {
                     rm.setId_resep(rs.getString("id_resep"));
                 }
-                if (rs.getString("id_dokter").equals("")) {
+                if (!rs.getString("id_dokter").equals("")) {
                     rm.setId_dokter(rs.getString("id_dokter"));
                 }
-                if (rs.getString("tgl_resep").equals("")) {
+                if (!rs.getString("tgl_resep").equals("")) {
                     rm.setTgl_resep(rs.getString("tgl_resep"));
                 }
-                if (rs.getString("id_poli").equals("")) {
+                if (!rs.getString("id_poli").equals("")) {
                     rm.setId_poli(rs.getString("id_poli"));
                 }
-                if (rs.getString("user_id").equals("")) {
+                if (!rs.getString("user_id").equals("")) {
                     rm.setUser_id(rs.getString("user_id"));
                 }   
                 listResep.add(rm);
@@ -63,7 +63,7 @@ public class ResepDAO {
             rs=ps.executeQuery();
             if(rs.next())
             {
-                String lastId=rs.getString("id_user");
+                String lastId=rs.getString("id_resep");
                 String zero="";
                 String strId=lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
                 int numId=Integer.valueOf(strId)+1;
@@ -71,7 +71,6 @@ public class ResepDAO {
                 for (int i = 0; i < strId.length()-idLength; i++) {
                     zero+="0";
                 }
-                id=String.valueOf(strId);
                 id="RS"+zero+numId;
             }
         }
@@ -80,6 +79,43 @@ public class ResepDAO {
             System.out.println(e);
         }
         return id;
+    }
+    
+    public resep_model getResepById(String id_resep)
+    {
+        System.out.println("-BY ID-");
+        resep_model rm=new resep_model();
+        String query="CALL BYID_RESEP(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_resep);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if (!rs.getString("id_resep").equals("")) {
+                    rm.setId_resep(rs.getString("id_resep"));
+                }
+                if (!rs.getString("id_dokter").equals("")) {
+                    rm.setId_dokter(rs.getString("id_dokter"));
+                }
+                if (!rs.getString("tgl_resep").equals("")) {
+                    rm.setTgl_resep(rs.getString("tgl_resep"));
+                }
+                if (!rs.getString("id_poli").equals("")) {
+                    rm.setId_poli(rs.getString("id_poli"));
+                }
+                if (!rs.getString("user_id").equals("")) {
+                    rm.setUser_id(rs.getString("user_id"));
+                }   
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return rm;
     }
     
     public void save(resep_model rm, String page)
@@ -123,11 +159,13 @@ public class ResepDAO {
     }
     
     public void delete(String id_resep){
-            String query = "CALL DELETE_RESEP(?)";
+            System.out.println("-DELETE-");
             try{
+                String query = "CALL DELETE_RESEP(?)";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, id_resep);
                 ps.executeUpdate();
+                System.out.println("Delete Data Success");
             }
             catch(SQLException e){
                 System.out.println("Delete Data Error : " + e);
@@ -142,8 +180,9 @@ public class ResepDAO {
         rm.setId_poli("P2");
         rm.setTgl_resep("21-08-21");
         rm.setUser_id("US0002");
-        rd.save(rm, "insert");
-        rd.delete("RS0001");
+        //rd.save(rm, "insert");
+        //rd.delete("RS0001");
+        System.out.println(rd.GenerateID());
         System.out.println(rd.getData());
     }
 }

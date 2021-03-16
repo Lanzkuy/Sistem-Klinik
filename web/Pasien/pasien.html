@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <script src ="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+    <script src ="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+    <!-- Local CSS -->
+    <link href="/Klinik/Dashboard-Petugas/dashboard.css" rel="stylesheet" />
+
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+          <div class="d-flex w-100">
+              <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search" id="search">
+            <button class="btn btn-outline-primary" onClick="logout()">Logout</button>
+          </div>
+        </div>
+      </nav>
+      <!-- Navbar End -->
+
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <nav class="nav">
+          <div class="sidebar-brand d-flex justify-content-center">
+            <h3 class=""><span class="fas fa-clinic-medical"></span><p>Clinic</p></h3>
+          </div>
+          <div class="sidebar-menu">
+            <li>
+              <a class="nav-link" href="/Klinik/Dashboard-Petugas/dashboard.html">
+                <span class="fas fa-user"></span>
+                <p>Users</p>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="/Klinik/Dokter/dokter.html">
+                <span class="fas fa-user-md"></span>
+                <p>Doctors</p>
+              </a>
+            </li>
+            <li><a class="nav-link" href="#">
+              <span class="fas fa-users"></span>
+              <p>Employees</p>
+            </a>
+            </li>
+            <li class="active "><a class="nav-link" href="/Klinik/Pasien/pasien.html">
+              <span class="fas fa-user-injured"></span>
+              <p>Patients</p>
+            </a>
+            </li>
+            <li><a class="nav-link" href="#">
+              <span class="fas fa-hospital-alt"></span>
+              <p>Rooms</p>
+            </a>
+            </li>
+            <li><a class="nav-link" href="/Klinik/Supplier/supplier.html">
+              <span class="fas fa-box"></span>
+              <p>Supplier</p>
+            </a>
+            </li>
+            <li><a class="nav-link" href="#">
+              <span class="fas fa-hand-holding-medical"></span>
+              <p>Service</p>
+            </a>
+            </li>
+            <li><a class="nav-link" href="/Klinik/Poli/poli.html">
+              <span class="fas fa-user-nurse"></span>
+              <p>Poli</p>
+            </a>
+            </li>
+            <li><a class="nav-link" href="#">
+              <span class="fas fa-pills"></span>
+              <p>Drugs</p>
+            </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Sidebar End -->
+    </div>
+
+    <!-- Main -->
+    <div class="main-content">
+      <div class="container d-flex flex-column">
+        <h3>Patients</h3>
+        <hr>
+        <div class="table table-responsive">
+          <table class="table table-bordered table-hover" id="tablePasien">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col">ID Pasien</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Tanggal Lahir</th>
+                <th scope="col">Jenis Kelamin</th>
+                <th scope="col">No KTP</th>
+                <th scope="col">No HP</th>
+                <th scope="col">Golongan Darah</th>
+                <th scope="col"><button class="btn btn-primary w-100" type="button" id="btnAdd">Add</button></th>
+              </tr>
+            </thead>
+            <tbody id="bodyTablePasien">
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Main End -->   
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header bg-primary">
+                    <font style="color:white">
+                      <h4 class="modal-title" data-toggle='modal' id="titleAdd">ADD DATA</h4>
+                      <h4 class="modal-title" data-toggle='modal' id="titleEdit">EDIT DATA</h4>
+                    </font>
+                </div>
+                <div class="modal-body modal-sm">
+                    <div class="container-fluid">
+                        <label  class="form-label">Nama Pasien</label>
+                        <input type="text" class="form-control mb-2" id="nama_pasien">
+                        <label  class="form-label">Tanggal Lahir</label>
+                        <input type="date" class="form-control mb-2" id="tgl_lahir">
+                        <label  class="form-label">Jenis Kelamin</label>
+                        <select id="gender" class="form-control">
+                            <option value="L">Laki-laki</option>  
+                            <option value="P">Perempuan</option>  
+                        </select>
+                        <label  class="form-label">No KTP</label>
+                        <input type="text" class="form-control mb-2" id="no_ktp">
+                        <label  class="form-label">No HP</label>
+                        <input type="text" class="form-control mb-2" id="no_hp">
+                        <label  class="form-label">Alamat</label>
+                        <input type="text" class="form-control mb-2" id="alamat">
+                        <label  class="form-label">Golongan Darah</label>
+                        <input type="text" class="form-control mb-2" id="gol_darah">
+                        <label  class="form-label">Password</label>
+                        <input type="password" class="form-control mb-2" id="password">
+                    </div>
+                </div>
+                <div class="modal-footer bg-primary">
+                    <button type="button" class="btn btn-secondary" id="btnSave">Submit</button>
+                    <button type="button" class="btn btn-light" id="btnCancel">Cancel</button>
+                </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Icons -->
+    <script src="https://kit.fontawesome.com/4077e4666f.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/Klinik/Pasien/pasien.js"></script>
+    <script>
+        
+        if (sessionStorage.getItem('isLogin') === null) 
+        {
+            alert('You are not login yet! Login first!');
+            document.location.href = '/Klinik/Login/login.html';
+        }
+        
+        function logout() 
+        {
+            if (confirm('Are you sure want logout this account?')) {
+              document.location.href = '/Klinik/Login/login.html';
+              sessionStorage.clear();
+            }
+        }
+    </script>
+  </body>
+</html>

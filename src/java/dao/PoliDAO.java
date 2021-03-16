@@ -34,11 +34,11 @@ public class PoliDAO {
             while(rs.next())
             {
                 poli_model pm=new poli_model(); 
-                if(rs.getString("id_poli").equals(""))
+                if(!rs.getString("id_poli").equals(""))
                 {
                     pm.setId_poli(rs.getString("id_poli"));
                 }
-                if(rs.getString("nama_poli").equals(""))
+                if(!rs.getString("nama_poli").equals(""))
                 {
                     pm.setNama_poli(rs.getString("nama_poli"));
                 }
@@ -117,7 +117,6 @@ public class PoliDAO {
     public void deleteData(String id)
     {
         System.out.println("-DELETE-");
-        user_model um=new user_model();
         try
         {
             String query="CALL DELETE_POLI(?)";
@@ -128,7 +127,7 @@ public class PoliDAO {
         }
         catch(SQLException e)
         {
-            System.out.println("Data Delete Error : "+e);
+            System.out.println("Delete Data Error : "+e);
         }
     }
     
@@ -144,11 +143,11 @@ public class PoliDAO {
             rs=ps.executeQuery();
             if(rs.next())
             {
-                if(rs.getString("id_poli").equals(""))
+                if(!rs.getString("id_poli").equals(""))
                 {
                     pm.setId_poli(rs.getString("id_poli"));
                 }
-                if(rs.getString("nama_poli").equals(""))
+                if(!rs.getString("nama_poli").equals(""))
                 {
                     pm.setNama_poli(rs.getString("nama_poli"));
                 }

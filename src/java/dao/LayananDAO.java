@@ -35,10 +35,10 @@ public class LayananDAO {
             rs=ps.executeQuery();
             while(rs.next()){
                 layanan_model lm = new layanan_model();
-                if (rs.getString("id_layanan").equals("")) {
+                if (!rs.getString("id_layanan").equals("")) {
                     lm.setId_layanan(rs.getString("id_layanan"));
                 }
-                if (rs.getString("des_layanan").equals("")) {
+                if (!rs.getString("des_layanan").equals("")) {
                     lm.setDes_layanan(rs.getString("des_layanan"));
                 }
                 listlayanan.add(lm);
@@ -51,23 +51,31 @@ public class LayananDAO {
         }
         return listlayanan;
     }
-//    public layanan_model getRecordByid_layanan(String id_layanan){
-//            layanan_model lm = new layanan_model();
-//            String sqlSearch = "select * from layanan where id_layanan=?";
-//            try {
-//                ps = conn.prepareStatement(sqlSearch);
-//                ps.setString(1, id_layanan);
-//                rs = ps.executeQuery();
-//                if (rs.next()){
-//                    lm.setId_layanan(rs.getString("id_layanan"));
-//                    lm.setDes_layanan(rs.getString("des_layanan"));
-//                }
-//            }
-//            catch (SQLException se){
-//                System.out.println("kesalahan pada : " + se);
-//            }
-//            return lm;
-//        }
+    
+    public String GenerateId(){
+        String query = "SELECT id_layanan FROM layanan ORDER BY id_layanan DESC LIMIT 1";
+        String id = "L01";
+        try{
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String lastId = rs.getString("id_layanan");
+                String zero = "";
+                String strId = lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
+                int numId = Integer.valueOf(strId)+1;
+                int idLength = String.valueOf(numId).length();
+                for (int i = 0; i < strId.length()-idLength; i++) {
+                    zero += "0";
+                }
+                id = String.valueOf(strId);
+                id = "L"+zero+numId;
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        return id;
+    }
     
     public void save(layanan_model lm, String page)
     {
@@ -107,26 +115,54 @@ public class LayananDAO {
     }
     
     public void delete(String id_layanan){
+        try{
             String sqlHapus = "DELETE FROM layanan WHERE id_layanan=?";
-            try{
-                ps = conn.prepareStatement(sqlHapus);
-                ps.setString(1, id_layanan);
-                ps.executeUpdate();
-            }
-            catch(SQLException e){
-                System.out.println("kesalahan hapus data: " + e);
-            }
+            ps = conn.prepareStatement(sqlHapus);
+            ps.setString(1, id_layanan);
+            ps.executeUpdate();
+            System.out.println("Delete Data Succes");
         }
+        catch(SQLException e){
+            System.out.println("Delete Data Error: " + e);
+        }
+    }
+    
+    public layanan_model getLayananById(String id_layanan)
+    {
+        System.out.println("-BY ID-");
+        layanan_model lm=new layanan_model();
+        String query="SELECT *FROM layanan WHERE id_layanan=?";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_layanan);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if (!rs.getString("id_layanan").equals("")) {
+                    lm.setId_layanan(rs.getString("id_layanan"));
+                }
+                if (!rs.getString("des_layanan").equals("")) {
+                    lm.setDes_layanan(rs.getString("des_layanan"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return lm;
+    }
     
     
     public static void main(String[] args) {
         LayananDAO ld =new LayananDAO();
         layanan_model lm = new layanan_model();
-//        System.out.println(ld.getData());
-        
-        lm.setDes_layanan("desku");
-        lm.setId_layanan("Z01");
-        ld.save(lm,"update");
+        lm.setDes_layanan("test");
+        lm.setId_layanan(ld.GenerateId());
+        //ld.save(lm,"insert");
+        System.out.println(ld.getLayananById("L01"));
         System.out.println(ld.getData());
     }
 }

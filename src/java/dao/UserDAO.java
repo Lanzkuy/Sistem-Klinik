@@ -31,33 +31,37 @@ public class UserDAO {
             while(rs.next())
             {
                 user_model km=new user_model();
-                if(rs.getString("id_user").equals(""))
+                if(!rs.getString("id_user").equals(""))
                 {
                     km.setId_user(rs.getString("id_user"));
                 }
-                if(rs.getString("nama_user").equals(""))
+                if(!rs.getString("nama_user").equals(""))
                 {
                     km.setNama_user(rs.getString("nama_user"));
                 }
-                if(rs.getString("password").equals(""))
+                if(!rs.getString("password").equals(""))
                 {
                     km.setPassword(rs.getString("password"));
                 }
-                if(rs.getString("no_ktp").equals(""))
+                if(!rs.getString("no_ktp").equals(""))
                 {
                     km.setNo_ktp(rs.getString("no_ktp"));
                 }
-                if(rs.getString("alamat").equals(""))
+                if(!rs.getString("alamat").equals(""))
                 {
                     km.setAlamat(rs.getString("alamat"));
                 }
-                if(rs.getString("no_hp").equals(""))
+                if(!rs.getString("no_hp").equals(""))
                 {
                     km.setNo_hp(rs.getString("no_hp"));
                 }
-                if(rs.getString("id_role").equals(""))
+                if(!rs.getString("id_role").equals(""))
                 {
                     km.setId_role(rs.getString("id_role"));
+                }
+                if(!rs.getString("des_role").equals(""))
+                {
+                    km.setNama_role(rs.getString("des_role"));
                 }
                 listUser.add(km);
             }
@@ -144,7 +148,6 @@ public class UserDAO {
     public void deleteData(String id)
     {
         System.out.println("-DELETE-");
-        user_model um=new user_model();
         try
         {
             String query="CALL DELETE_USER(?)";
@@ -155,32 +158,38 @@ public class UserDAO {
         }
         catch(SQLException e)
         {
-            System.out.println("Data Delete Error : "+e);
+            System.out.println("Delete Data Error : "+e);
         }
     }
     
-    public String login(String id, String password)
-     {
-         System.out.println("-LOGIN-");
-         user_model um=new user_model();
-         try
-         {
-                String query="SELECT *FROM user where id_user=? and password=?";
-                ps=conn.prepareStatement(query);
-                ps.setString(1, id);
-                ps.setString(2, password);
-                rs=ps.executeQuery();
-                if (rs.next()) 
-                { 
-                    return "Login Success";
-                }
-         }  
-         catch (SQLException e) 
-         {
-             System.err.println("Login Error : "+e);
-         }
-        return "Login Failed (Wrong Username or Password)";
-     }
+    public user_model login(String id, String password)
+    {
+        System.out.println("-LOGIN-");
+        user_model um=new user_model();
+        try
+        {
+               String query="SELECT *FROM user where id_user=? and password=?";
+               ps=conn.prepareStatement(query);
+               ps.setString(1, id);
+               ps.setString(2, password);
+               rs=ps.executeQuery();
+               if (rs.next()) 
+               { 
+                   um.setId_user(rs.getString("id_user"));
+                   um.setPassword(rs.getString("password"));
+                   um.setNama_user(rs.getString("nama_user"));
+                   um.setNo_hp(rs.getString("no_hp"));
+                   um.setNo_ktp(rs.getString("no_ktp"));
+                   um.setAlamat(rs.getString("alamat"));
+                   um.setId_role(rs.getString("id_role"));
+               }
+        }  
+        catch (SQLException e) 
+        {
+            System.err.println("Login Error : "+e);
+        }
+        return um;
+    }
     
     public user_model getUserById(String id_user)
     {
@@ -194,31 +203,31 @@ public class UserDAO {
             rs=ps.executeQuery();
             if(rs.next())
             {
-                if(rs.getString("id_user").equals(""))
+                if(!rs.getString("id_user").equals(""))
                 {
                     km.setId_user(rs.getString("id_user"));
                 }
-                if(rs.getString("nama_user").equals(""))
+                if(!rs.getString("nama_user").equals(""))
                 {
                     km.setNama_user(rs.getString("nama_user"));
                 }
-                if(rs.getString("password").equals(""))
+                if(!rs.getString("password").equals(""))
                 {
                     km.setPassword(rs.getString("password"));
                 }
-                if(rs.getString("no_ktp").equals(""))
+                if(!rs.getString("no_ktp").equals(""))
                 {
                     km.setNo_ktp(rs.getString("no_ktp"));
                 }
-                if(rs.getString("alamat").equals(""))
+                if(!rs.getString("alamat").equals(""))
                 {
                     km.setAlamat(rs.getString("alamat"));
                 }
-                if(rs.getString("no_hp").equals(""))
+                if(!rs.getString("no_hp").equals(""))
                 {
                     km.setNo_hp(rs.getString("no_hp"));
                 }
-                if(rs.getString("id_role").equals(""))
+                if(!rs.getString("id_role").equals(""))
                 {
                     km.setId_role(rs.getString("id_role"));
                 }

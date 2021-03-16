@@ -8,6 +8,15 @@ public class user_model {
     private String alamat;
     private String no_hp;
     private String id_role;
+    private String nama_role;
+
+    public String getNama_role() {
+        return nama_role;
+    }
+
+    public void setNama_role(String nama_role) {
+        this.nama_role = nama_role;
+    }
 
     public String getId_user() {
         return id_user;

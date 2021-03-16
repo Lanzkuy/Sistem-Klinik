@@ -11,6 +11,15 @@ public class pasien_model {
     private String gol_darah;
     private String password;
     private String user_id;
+    private String nama_user;
+
+    public String getNama_user() {
+        return nama_user;
+    }
+
+    public void setNama_user(String nama_user) {
+        this.nama_user = nama_user;
+    }
 
     public String getId_pasien() {
         return id_pasien;

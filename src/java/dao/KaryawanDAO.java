@@ -28,7 +28,7 @@ public class KaryawanDAO {
     }
     
     public ArrayList<karyawan_model>getData(){
-        System.out.println("--GET--");
+        System.out.println("-GET-");
         ArrayList<karyawan_model>listKaryawan = new ArrayList();
         try{
             String query = "SELECT *FROM karyawan ORDER BY id_karyawan";
@@ -36,37 +36,37 @@ public class KaryawanDAO {
             rs = ps.executeQuery();
             while(rs.next()){
                 karyawan_model km = new karyawan_model();
-                if (rs.getString("id_karyawan").equals("")) {
+                if (!rs.getString("id_karyawan").equals("")) {
                     km.setId_karyawan(rs.getString("id_karyawan"));
                 }
-                if (rs.getString("nama_karyawan").equals("")) {
+                if (!rs.getString("nama_karyawan").equals("")) {
                     km.setNama_karyawan(rs.getString("nama_karyawan"));
                 }
-                if (rs.getString("tgl_lahir").equals("")) {
+                if (!rs.getString("tgl_lahir").equals("")) {
                     km.setTgl_lahir(rs.getString("tgl_lahir"));
                 }
-                if (rs.getString("bidang_pekerjaan").equals("")) {
+                if (!rs.getString("bidang_pekerjaan").equals("")) {
                     km.setBidang_pekerjaan(rs.getString("bidang_pekerjaan"));
                 }
-                if (rs.getString("jenis_kelamin").equals("")) {
+                if (!rs.getString("jenis_kelamin").equals("")) {
                     km.setJenis_kelamin(rs.getString("jenis_kelamin"));
                 }
-                if (rs.getString("alamat").equals("")) {
+                if (!rs.getString("alamat").equals("")) {
                     km.setAlamat(rs.getString("alamat"));
                 }
-                if (rs.getString("no_hp").equals("")) {
+                if (!rs.getString("no_hp").equals("")) {
                     km.setNo_hp(rs.getString("no_hp"));
                 }
-                if (rs.getString("no_ktp").equals("")) {
+                if (!rs.getString("no_ktp").equals("")) {
                     km.setNo_ktp(rs.getString("no_ktp"));
                 }
-                if (rs.getString("email").equals("")) {
+                if (!rs.getString("email").equals("")) {
                     km.setEmail(rs.getString("email"));
                 }
-                if (rs.getString("no_npwp").equals("")) {
+                if (!rs.getString("no_npwp").equals("")) {
                     km.setNo_npwp(rs.getString("no_npwp"));
                 }
-                if (rs.getString("user_id").equals("")) {
+                if (!rs.getString("user_id").equals("")) {
                     km.setUser_id(rs.getString("user_id"));
                 }
                 listKaryawan.add(km);
@@ -81,7 +81,7 @@ public class KaryawanDAO {
     
     public String GenerateID(){
         String query = "SELECT id_karyawan FROM karyawan ORDER BY id_karyawan DESC LIMIT 1";
-        String id = "K01";
+        String id = "KR0001";
         try{
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
@@ -95,7 +95,7 @@ public class KaryawanDAO {
                     zero += "0";
                 }
                 id = String.valueOf(strId);
-                id = "K" + zero + numId;
+                id = "KR" + zero + numId;
             }
         }
         catch(SQLException e)
@@ -106,13 +106,12 @@ public class KaryawanDAO {
     }
     
     public void save(karyawan_model km, String page){
-        System.out.println("-- ADD / UPDATE --");
-        Connection connection = null;
+        System.out.println("-ADD/UPDATE-");
         String query = null;
         if (page.equals("update")) {
             query = "CALL UPDATE_KARYAWAN(?,?,?,?,?,?,?,?,?,?,?)";
         }
-        else if (page.equals("add")) {
+        else if (page.equals("insert")) {
             query = "CALL INSERT_KARYAWAN(?,?,?,?,?,?,?,?,?,?,?)";
         }
         try{
@@ -129,11 +128,11 @@ public class KaryawanDAO {
             ps.setString(10, km.getUser_id());
             ps.setString(11, km.getId_karyawan());
             ps.executeUpdate();
-            System.out.println("Berhasil ADD..");
+            System.out.println("Insert/Update Data Success");
         }
         catch (SQLException e) 
         {
-            System.out.println("Add Data Error : "+e);
+            System.out.println("Save Data Error : "+e);
         }
         finally{
             try
@@ -148,14 +147,14 @@ public class KaryawanDAO {
     }
     
     public void deleteData(String id){
-        System.out.println("--DELETE--");
+        System.out.println("-DELETE-");
         karyawan_model km = new karyawan_model();
         try{
             String query = "CALL DELETE_KARYAWAN(?)";
             ps = conn.prepareStatement(query);
             ps.setString(1, id);
             ps.executeUpdate();
-            System.out.println("Delete Data Berhasil..");
+            System.out.println("Delete Data Success");
         }
         catch(SQLException e)
         {
@@ -163,11 +162,66 @@ public class KaryawanDAO {
         }
     }
     
+    public karyawan_model getKaryawanById(String id_karyawan)
+    {
+        System.out.println("-BY ID-");
+        karyawan_model km=new karyawan_model();
+        String query="CALL BYID_KARYAWAN(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_karyawan);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if (!rs.getString("id_karyawan").equals("")) {
+                    km.setId_karyawan(rs.getString("id_karyawan"));
+                }
+                if (!rs.getString("nama_karyawan").equals("")) {
+                    km.setNama_karyawan(rs.getString("nama_karyawan"));
+                }
+                if (!rs.getString("tgl_lahir").equals("")) {
+                    km.setTgl_lahir(rs.getString("tgl_lahir"));
+                }
+                if (!rs.getString("bidang_pekerjaan").equals("")) {
+                    km.setBidang_pekerjaan(rs.getString("bidang_pekerjaan"));
+                }
+                if (!rs.getString("jenis_kelamin").equals("")) {
+                    km.setJenis_kelamin(rs.getString("jenis_kelamin"));
+                }
+                if (!rs.getString("alamat").equals("")) {
+                    km.setAlamat(rs.getString("alamat"));
+                }
+                if (!rs.getString("no_hp").equals("")) {
+                    km.setNo_hp(rs.getString("no_hp"));
+                }
+                if (!rs.getString("no_ktp").equals("")) {
+                    km.setNo_ktp(rs.getString("no_ktp"));
+                }
+                if (!rs.getString("email").equals("")) {
+                    km.setEmail(rs.getString("email"));
+                }
+                if (!rs.getString("no_npwp").equals("")) {
+                    km.setNo_npwp(rs.getString("no_npwp"));
+                }
+                if (!rs.getString("user_id").equals("")) {
+                    km.setUser_id(rs.getString("user_id"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return km;
+    }
+    
     public static void main(String[] args){
         KaryawanDAO kardao = new KaryawanDAO();
         karyawan_model km = new karyawan_model();
-        km.setId_karyawan("K02");
-        km.setNama_karyawan("Rini");
+        km.setId_karyawan("KR0001");
+        km.setNama_karyawan("Rini Swain");
         km.setTgl_lahir("1994-10-5");
         km.setBidang_pekerjaan("Perawat");
         km.setJenis_kelamin("P");
@@ -176,8 +230,10 @@ public class KaryawanDAO {
         km.setNo_ktp("9834503453");
         km.setEmail("budigaming@gmail.com");
         km.setNo_npwp("093503453");
-        km.setUser_id("US0031");
+        km.setUser_id("US0001");
         kardao.save(km, "update");
+        kardao.deleteData("KR0001");
+        System.out.println(kardao.getKaryawanById("KR0001"));
         System.out.println(kardao.getData());
     }
     

@@ -31,7 +31,7 @@ public class RawatInapDAO {
     }
     
     public ArrayList<rawat_inap_model> getData(){
-        System.out.println("--GET--");
+        System.out.println("-GET-");
         ArrayList<rawat_inap_model> listInap = new ArrayList<>();
         try{
             String query = "CALL GET_RAWATINAP";
@@ -39,37 +39,37 @@ public class RawatInapDAO {
             rs = ps.executeQuery();
             while(rs.next()){
                 rawat_inap_model rim = new rawat_inap_model();
-                if(rs.getString("id_rawat").equals(""))
+                if(!rs.getString("id_rawat").equals(""))
                 {
                     rim.setId_rawat(rs.getString("id_rawat"));
                 }
-                if(rs.getString("id_pasien").equals(""))
+                if(!rs.getString("id_pasien").equals(""))
                 {
                     rim.setId_pasien(rs.getString("id_pasien"));
                 }
-                if(rs.getString("id_kamar").equals(""))
+                if(!rs.getString("id_kamar").equals(""))
                 {
                     rim.setId_kamar(rs.getString("id_kamar"));
                 }
-                if(rs.getString("nama_ruang").equals(""))
+                if(!rs.getString("nama_ruang").equals(""))
                 {
                     rim.setNama_ruang(rs.getString("nama_ruang"));
                 }
-                if(rs.getString("tgl_cekin").equals(""))
+                if(!rs.getString("tgl_cekin").equals(""))
                 {
                     rim.setTgl_checkin(rs.getString("tgl_cekin"));
                 }
-                if(rs.getString("tgl_cekout").equals(""))
+                if(!rs.getString("tgl_cekout").equals(""))
                 {
                     rim.setTgl_checkout(rs.getString("tgl_cekout"));
                 }
-                if(rs.getString("keterangan").equals(""))
+                if(!rs.getString("keterangan").equals(""))
                 {
                     rim.setKeterangan(rs.getString("keterangan"));
                 }
                 listInap.add(rim);
             }
-            System.out.println("GET data berhasil..");
+            System.out.println("Get Data Success");
         }
         catch (SQLException e) 
         {
@@ -80,7 +80,7 @@ public class RawatInapDAO {
     
     public String GenerateId(){
         String query = "SELECT id_rawat FROM rawat_inap ORDER BY id_rawat DESC LIMIT 1";
-        String id = "RI001";
+        String id = "RI0001";
         try{
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
@@ -104,7 +104,7 @@ public class RawatInapDAO {
     }
     
     public void add(rawat_inap_model rim , String page){
-        System.out.println("--ADD/UPDATE--");
+        System.out.println("-ADD/UPDATE-");
         String query = null;
         if (page.equals("update")) {
             query = "CALL UPDATE_RAWATINAP(?,?,?,?,?,?,?)";
@@ -138,33 +138,83 @@ public class RawatInapDAO {
     }
     
     public void deleteData(String id){
-        System.out.println("--DELETE--");
+        System.out.println("-DELETE-");
         try{
             String query = "CALL DELETE_RAWATINAP(?)";
             ps = conn.prepareStatement(query);
             ps.setString(1, id);
             ps.executeUpdate();
-            System.out.println("Berhasil Hapus Data");
+            System.out.println("Delete Data Success");
         }
         catch(SQLException e){
-            System.out.println("Gagal Hapus Data : "+e);
+            System.out.println("Delete Data Error : "+e);
         }
     }
     
-
+    public rawat_inap_model getRawatInapById(String id_rawatinap)
+    {
+        System.out.println("-BY ID-");
+        rawat_inap_model rim=new rawat_inap_model();
+        String query="CALL BYID_RAWATINAP(?)";
+        try
+        {
+            ps=conn.prepareStatement(query);
+            ps.setString(1, id_rawatinap);
+            rs=ps.executeQuery();
+            if(rs.next())
+            {
+                if(!rs.getString("id_rawat").equals(""))
+                {
+                    rim.setId_rawat(rs.getString("id_rawat"));
+                }
+                if(!rs.getString("id_pasien").equals(""))
+                {
+                    rim.setId_pasien(rs.getString("id_pasien"));
+                }
+                if(!rs.getString("id_kamar").equals(""))
+                {
+                    rim.setId_kamar(rs.getString("id_kamar"));
+                }
+                if(!rs.getString("nama_ruang").equals(""))
+                {
+                    rim.setNama_ruang(rs.getString("nama_ruang"));
+                }
+                if(!rs.getString("tgl_cekin").equals(""))
+                {
+                    rim.setTgl_checkin(rs.getString("tgl_cekin"));
+                }
+                if(!rs.getString("tgl_cekout").equals(""))
+                {
+                    rim.setTgl_checkout(rs.getString("tgl_cekout"));
+                }
+                if(!rs.getString("keterangan").equals(""))
+                {
+                    rim.setKeterangan(rs.getString("keterangan"));
+                }
+            }
+            System.out.println("Get Data Success");
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
+        return rim;
+    }
     
     public static void main(String[] args) {
         // TODO code application logic here
-        RawatInapDAO rid = new RawatInapDAO();
+        RawatInapDAO rid = new RawatInapDAO ();
         rawat_inap_model rim = new rawat_inap_model();
         rim.setId_rawat(rid.GenerateId());
-        rim.setId_pasien("P002");
-        rim.setId_kamar("KMR002");
+        rim.setId_pasien("PS0001");
+        rim.setId_kamar("KMR001");
         rim.setNama_ruang("Kamboja");
         rim.setTgl_checkin("2021-02-05");
         rim.setTgl_checkout("2021-03-05");
         rim.setKeterangan("Tidak Ada");
-        rid.add(rim, "add");
+        //rid.add(rim, "add");
+        //rid.deleteData("RI0001");
+        System.out.println(rid.getRawatInapById("RI0001"));
         System.out.println(rid.getData());
     }
     
