@@ -1,6 +1,7 @@
 package model;
 
 public class user_model {
+
     private String id_user;
     private String nama_user;
     private String password;
@@ -9,6 +10,15 @@ public class user_model {
     private String no_hp;
     private String id_role;
     private String nama_role;
+    private String deleted_at;
+            
+    public String getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(String deleted_at) {
+        this.deleted_at = deleted_at;
+    }
 
     public String getNama_role() {
         return nama_role;

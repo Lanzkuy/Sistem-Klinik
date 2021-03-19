@@ -39,16 +39,12 @@ $(document).ready(function () {
                 id_user: id,
                 password: pass
             }, 
-            function (data,status) 
+            function (data) 
             {
                 console.log(data);
-                if(data.id_user==="undefined")
+                if(Object.keys(data).length===0)
                 {
                     alert('ID or Password is wrong !!');
-                }
-                else if(data.deleted_at==="undefined")
-                {
-                    alert('This Account was Not Active !!');
                 }
                 else
                     {

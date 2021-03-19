@@ -215,7 +215,8 @@ $(document).ready(function() {
               data: data,
               sort: false,
               searching: false,
-              paging: false,
+              paging: true,
+              bInfo:false,
               columns: 
               [
                 {'data': 'id_pasien'},
@@ -229,10 +230,10 @@ $(document).ready(function() {
                     'mRender':function(o)
                     {
                         return "<div class='text-center'><a class='btn btn-outline-success btn-sm'"
-                                +" id='btnEdit'>Edit</a> "
+                                +" id='btnEdit'>Update</a> "
                                 +"&nbsp;&nbsp;"
                                 +"<a class='btn btn-outline-danger btn-sm' "
-                                +"id='btnDel'>Hapus</a></div>";
+                                +"id='btnDel'>Delete</a></div>";
                     }
                 }
               ]

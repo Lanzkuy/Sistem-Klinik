@@ -46,21 +46,37 @@ public class LayananController extends HttpServlet {
             String jsonLayanan=g.toJson(listLayanan);
             out.println(jsonLayanan);
         }
-        else if(page=="insert")
+        else if("insert".equals(page))
         {
+            layanan_model pm=new layanan_model();
+            pm.setId_layanan(dao.GenerateId());
+            pm.setDes_layanan(request.getParameter("des_layanan"));
+            dao.save(pm, page);
             
+            response.setContentType("text/html;charset=UTF-8");
+            out.print("Data Added");
         }
-        else if(page=="update")
+        else if("update".equals(page))
         {
+            layanan_model pm=new layanan_model();
+            pm.setId_layanan(request.getParameter("id_layanan"));
+            pm.setDes_layanan(request.getParameter("des_layanan"));
+            dao.save(pm, page);
             
+            response.setContentType("text/html;charset=UTF-8");
+            out.print("Data Updated");
         }
-        else if(page=="byid")
+        else if("byid".equals(page))
         {
-            
+            String json=g.toJson(dao.getLayananById(request.getParameter("id_layanan")));
+            response.setContentType("application/json");
+            out.println(json);
         }
-        else if(page=="delete")
+        else if("delete".equals(page))
         {
-            
+            dao.delete(request.getParameter("id_layanan"));
+            response.setContentType("text/html;charset=UTF-8");
+            out.print("Data Deleted");
         }
     }
 

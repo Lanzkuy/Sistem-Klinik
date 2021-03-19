@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>web/Login/login.js</url>
+            <bookmark id="1">
+                <name/>
+                <line>43</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ahmad%20Maulana/Documents/NetBeansProjects/Klinik/web/Pasien/pasien.js</file>
-            <file>file:/C:/Users/Ahmad%20Maulana/Documents/NetBeansProjects/Klinik/web/Dokter/dokter.js</file>
-            <file>file:/C:/Users/Ahmad%20Maulana/Documents/NetBeansProjects/Klinik/src/java/controller/UserController.java</file>
+            <file>file:/C:/Users/Ahmad%20Maulana/Documents/NetBeansProjects/Klinik/src/java/dao/PembelianObatDAO.java</file>
+            <file>file:/C:/Users/Ahmad%20Maulana/Documents/NetBeansProjects/Klinik/src/java/dao/ObatDAO.java</file>
         </group>
     </open-files>
 </project-private>

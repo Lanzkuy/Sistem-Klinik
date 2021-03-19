@@ -29,7 +29,7 @@ public class ObatDAO {
         ArrayList<obat_model> listobat=new ArrayList<>();
         try{
             System.out.println("-GET-");
-            String query="SELECT *FROM obat ORDER BY id_obat";
+            String query="SELECT *FROM obat WHERE deleted_at is null ORDER BY id_obat";
             ps=conn.prepareStatement(query);
             rs=ps.executeQuery();
             while(rs.next()){
@@ -123,7 +123,12 @@ public class ObatDAO {
                 String zero="";
                 String strId=lastId.substring(lastId.replaceAll("[^a-zA-Z]", "").length());
                 int numId=Integer.valueOf(strId)+1;
-                id="OBT"+numId;
+                int idLength=String.valueOf(numId).length();
+                for (int i = 0; i < strId.length()-idLength; i++) {
+                    zero+="0";
+                }
+                id=String.valueOf(strId);
+                id="OBT"+zero+numId;
             }
         }
         catch(SQLException e)

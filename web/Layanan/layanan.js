@@ -1,29 +1,25 @@
-    $(document).ready(function() {
-    var idsupplier, nama_supplier, alamat, no_hp, email;
+$(document).ready(function() {
+    var id_layanan, des_layanan;
     
     function getInputValue()
     {
-        nama_supplier = $("#nama_supplier").val();
-        alamat = $("#alamat").val();
-        no_hp=$("#no_telepon").val();
-        email = $("#email").val();
+        id_layanan = $("#id_layanan").val();
+        des_layanan = $("#des_layanan").val();
     }
-    
+
     function Clear()
     {
-        $("#nama_supplier").val("");
-        $("#alamat").val("");
-        $("#no_telepon").val("");
-        $("#email").val("");
+        $("#id_layanan").val("");
+        $("#des_layanan").val("");
     }
-    
+
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $("#bodyTableSupplier tr").filter(function() {
+        $("#bodyTableLayanan tr").filter(function() {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
-    
+
     $('#btnAdd').click(function()
     {
         $("#myModal").modal('show');
@@ -31,49 +27,35 @@
         $("#titleEdit").hide();
         page="insert";
     });
-    
+
     $('#btnCancel').click(function()
     {
         Clear();
         $("#myModal").modal('hide');
     });
-    
+
     $('#btnSave').on('click',function()
     {
-        if(nama_supplier==="")
+        if(id_layanan==="")
         {
-            alert("Name must be filled");
-            $("#nama_user").focus();
+            alert("Id must be filled");
+            $("#id_layanan").focus();
         }
-        else if(no_hp==="")
+        else if(des_layanan==="")
         {
-            alert("Password must be filled");
-            $("#password").focus();
-        }
-        else if(alamat==="")
-        {
-            alert("Alamat must be filled");
-            $("#alamat").focus();
-        }
-        else if(email==="")
-        {
-            alert("No Hp must be filled");
-            $("#no_hp").focus();
+            alert("Description must be filled");
+            $("#des_layanan").focus();
         }
         else
         {
             if(page==="insert")
             {
                 getInputValue();
-                
-                $.post("/Klinik/SupplierController",
+                $.post("/Klinik/LayananController",
                 {
                     page:page,
-                    nama_supplier:nama_supplier,
-                    no_telepon:no_hp,
-                    alamat:alamat,
-                    email:email,
-                    user_id:sessionStorage.getItem('id_user')
+                    id_layanan:id_layanan,
+                    des_layanan:des_layanan
                 },
                 function(data)
                 {
@@ -88,15 +70,11 @@
             else if(page==="update")
             {
                 getInputValue();
-                $.post("/Klinik/SupplierController",
+                $.post("/Klinik/LayananController",
                 {
                     page:page,
-                    id_supplier:idsupplier,
-                    nama_supplier:nama_supplier,
-                    no_telepon:no_hp,
-                    alamat:alamat,
-                    email:email,
-                    user_id:sessionStorage.getItem('user_id')
+                    id_layanan:id_layanan,
+                    des_layanan:des_layanan
                 },
                 function(data)
                 {
@@ -106,49 +84,47 @@
                         Clear();
                         location.reload();
                     }
-                });  
+                });
             }
         }
     });
-    
-    $("#tableSupplier tbody").on('click','#btnEdit',function()
+
+    $("#tableLayanan tbody").on('click','#btnEdit',function()
     {
         $("#myModal").modal('show');
         $("#titleAdd").hide();
         $("#titleEdit").show(); 
         page='byid';
-        
+
         var row=$(this).closest('tr');
-        var id_supplier=row.find("td:eq(0)").text();
+        var layanan_id=row.find("td:eq(0)").text();
         
-        $.post("/Klinik/SupplierController",
+        $.post("/Klinik/LayananController",
         {
             page:page,
-            id_supplier:id_supplier
+            id_layanan:layanan_id
         },
         function(data)
         {
-            idsupplier=data.id_supplier;
-            $("#nama_supplier").val(data.nama_supplier);
-            $("#no_telepon").val(data.no_telepon);
-            $("#alamat").val(data.alamat);
-            $("#email").val(data.email);
+            id_layanan=data.id_layanan;
+            $("#id_layanan").val(data.id_layanan);
+            $("#des_layanan").val(data.des_layanan);
         });
         page="update";
     });
-    
-    $("#tableSupplier tbody").on('click','#btnDel',function()
+
+    $("#tableLayanan tbody").on('click','#btnDel',function()
     {
         var row=$(this).closest('tr');
-        var id_supplier=row.find("td:eq(0)").text();
+        var layanan_id=row.find("td:eq(0)").text();
         page="delete";
         
-        if(confirm("Want to delete : "+id_supplier+" ?"))
+        if(confirm("Want to delete : "+layanan_id+" ?"))
         {
-            $.post("/Klinik/SupplierController",
+            $.post("/Klinik/LayananController",
             {
                 page:page,
-                id_supplier:id_supplier
+                id_layanan:layanan_id
             },
             function(data)
             {
@@ -157,30 +133,27 @@
             });
         }
     });
-    
+
     $.ajax 
     ({
-        url: "/Klinik/SupplierController",
+        url: "/Klinik/LayananController",
         method: "GET",
         dataType: "json",
         success:
           function(data)
           {   
-            $("#tableSupplier").dataTable({
+            $("#tableLayanan").dataTable({
               serverside: true,
               processing: false,
               data: data,
-              sort: false,
+              sort: true,
               searching: false,
               paging: true,
               bInfo:false,
               columns: 
               [
-                {'data': 'id_supplier'},
-                {'data': 'nama_supplier'},
-                {'data': 'alamat'}, 
-                {'data': 'no_telepon'},
-                {'data': 'email'},
+                {'data': 'id_layanan'},
+                {'data': 'des_layanan'},
                 {'data':null, 'className':'dt-right',
                     'mRender':function(o)
                     {
@@ -188,7 +161,7 @@
                                 +" id='btnEdit'>Update</a> "
                                 +"&nbsp;&nbsp;"
                                 +"<a class='btn btn-outline-danger btn-sm' "
-                                +"id='btnDel'>Delete</a></div>";
+                                +"id='btnDel'>Delete</a><div>";
                     }
                 }
               ]

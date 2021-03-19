@@ -168,7 +168,7 @@ public class UserDAO {
         user_model um=new user_model();
         try
         {
-               String query="SELECT *FROM user where id_user=? and password=?";
+               String query="SELECT *FROM user where id_user=? and password=? and deleted_at is null";
                ps=conn.prepareStatement(query);
                ps.setString(1, id);
                ps.setString(2, password);

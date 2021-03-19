@@ -39,38 +39,67 @@ public class PembelianObatController extends HttpServlet{
             List<pembelian_obat_model> ListPembelianObat = dao.getData();
             String jsonPembelianObat = gson.toJson(ListPembelianObat);
             out.println(jsonPembelianObat);
-            System.out.println("Berhasil Get Data : "+jsonPembelianObat);
         }
-
         else if ("insert".equals(page)) {
+            pembelian_obat_model pom=new pembelian_obat_model();
+            pom.setId_trans(dao.GenerateID());
+            pom.setId_supplier(request.getParameter("id_supplier"));
+            pom.setId_obat(request.getParameter("id_obat"));
+            pom.setId_user(request.getParameter("user_id"));
+            pom.setJumlah(Integer.parseInt(request.getParameter("jumlah")));
+            pom.setKeterangan(request.getParameter("keterangan"));
+            pom.setNo_faktur(request.getParameter("no_faktur"));
+            pom.setTgl_expired(request.getParameter("tgl_expired"));
+            pom.setTgl_faktur(request.getParameter("tgl_faktur"));
             
-        }
-        else if ("show".equals(page)) {
-            
-        }
-
-        else if ("update".equals(page)) {
-            pembelian_obat_model po = new pembelian_obat_model();
-            po.setId_trans(request.getParameter("id_trans"));
-            po.setId_supplier(request.getParameter("id_supplier"));
-            po.setNo_faktur(request.getParameter("no_faktur"));
-            po.setTgl_faktur(request.getParameter("tgl_faktur"));
-            po.setId_obat(request.getParameter("id_obat"));
-            po.setHarga_beli(Double.parseDouble(request.getParameter("harga_beli")));
-            po.setJumlah(Integer.parseInt(request.getParameter("jumlah")));
-            po.setKeterangan(request.getParameter("keterangan"));
-            po.setTgl_expired(request.getParameter("tgl_expired"));
-            po.setId_user(request.getParameter("id_user"));
-            dao.save(po, page);
+            dao.save(pom, page);
             response.setContentType("text/html;charset=UTF-8");
-            out.print("Data berhasil diupdate");
+            out.print("Data Added");
         }
-
         else if ("delete".equals(page)) {
             dao.delete(request.getParameter("id_trans"));
 
             response.setContentType("text/html;charset=UTF-8");
-            out.print("Data berhasil dihapus");
+            out.print("Data Deleted");
         }
     }
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

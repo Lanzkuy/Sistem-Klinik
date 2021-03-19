@@ -23,7 +23,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
         <div class="container-fluid">
           <div class="d-flex w-100">
-              <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search" id="search">
+              <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search" id="search" onkeyup="myFunction()">
             <button class="btn btn-outline-primary" onClick="logout()">Logout</button>
           </div>
         </div>
@@ -37,7 +37,7 @@
             <h3 class=""><span class="fas fa-clinic-medical"></span><p>Clinic</p></h3>
           </div>
           <div class="sidebar-menu">
-            <li>
+            <li >
               <a class="nav-link" href="/Klinik/Dashboard-Petugas/dashboard.html">
                 <span class="fas fa-user"></span>
                 <p>Users</p>
@@ -69,12 +69,12 @@
               <p>Supplier</p>
             </a>
             </li>
-            <li><a class="nav-link" href="/Klinik/Layanan/layanan.html">
+            <li class="active "><a class="nav-link" href="/Klinik/Layanan/layanan.html">
               <span class="fas fa-hand-holding-medical"></span>
               <p>Service</p>
             </a>
             </li>
-            <li class="active "><a class="nav-link" href="/Klinik/Poli/poli.html">
+            <li><a class="nav-link" href="/Klinik/Poli/poli.html">
               <span class="fas fa-user-nurse"></span>
               <p>Poli</p>
             </a>
@@ -93,18 +93,18 @@
     <!-- Main -->
     <div class="main-content">
       <div class="container d-flex flex-column">
-        <h3>Poli</h3>
+        <h3>Layanan</h3>
         <hr>
         <div class="table table-responsive">
-          <table class="table table-bordered table-hover" id="tablePoli">
+          <table class="table table-bordered table-hover" id="tableLayanan">
             <thead class="table-primary">
               <tr>
-                <th scope="col">ID Poli</th>
-                <th scope="col">Nama</th>
+                <th scope="col">ID Layanan</th>
+                <th scope="col">Deskripsi</th>
                 <th scope="col"><button class="btn btn-primary w-100" type="button" id="btnAdd">Add</button></th>
               </tr>
             </thead>
-            <tbody id="bodyTablePoli">
+            <tbody id="bodyTableLayanan">
                 
             </tbody>
           </table>
@@ -112,7 +112,7 @@
       </div>
     </div>
     <!-- Main End -->   
-
+    
     <!-- Modal -->
     <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModal">
         <div class="modal-dialog modal-sm">
@@ -125,8 +125,8 @@
                 </div>
                 <div class="modal-body modal-sm">
                     <div class="container-fluid">
-                        <label  class="form-label">Nama Poli</label>
-                        <input type="text" class="form-control mb-2" id="nama_poli">
+                        <label class="form-label">Deskripsi layanan</label>
+                        <input type="text" class="form-control"  id="des_layanan" required>
                     </div>
                 </div>
                 <div class="modal-footer bg-primary">
@@ -136,7 +136,6 @@
           </div>
         </div>
     </div>
-    
 
     <!-- Icons -->
     <script src="https://kit.fontawesome.com/4077e4666f.js" crossorigin="anonymous"></script>
@@ -145,13 +144,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/Klinik/Poli/poli.js"></script>
+    <script type="text/javascript" src="/Klinik/Layanan/layanan.js"></script>
     <script>
         
         if (sessionStorage.getItem('isLogin') === null) 
         {
             alert('You are not login yet! Login first!');
-            document.location.href = '/Klinik/Poli/poli.html';
+            document.location.href = '/Klinik/Login/login.html';
         }
         
         function logout() 

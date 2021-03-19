@@ -1,6 +1,7 @@
 package model;
 
 public class pembelian_obat_model {
+
     private String id_trans;
     private String id_supplier;
     private String no_faktur;
@@ -9,8 +10,26 @@ public class pembelian_obat_model {
     private String keterangan;
     private String tgl_expired;
     private String id_user;
+    private String nama_obat;
+    private String nama_supplier;
     private double harga_beli;
     private double jumlah;
+    
+    public String getNama_obat() {
+        return nama_obat;
+    }
+
+    public void setNama_obat(String nama_obat) {
+        this.nama_obat = nama_obat;
+    }
+
+    public String getNama_supplier() {
+        return nama_supplier;
+    }
+
+    public void setNama_supplier(String nama_supplier) {
+        this.nama_supplier = nama_supplier;
+    }
 
     public String getId_trans() {
         return id_trans;

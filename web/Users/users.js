@@ -44,7 +44,7 @@ $(document).ready(function() {
     
     $('#btnSave').on('click',function()
     {
-        if(nama_user==="")
+        if(nama_user==="")  
         {
             alert("Name must be filled");
             $("#nama_user").focus();
@@ -91,9 +91,9 @@ $(document).ready(function() {
                 },
                 function(data)
                 {
-                    alert(data);
-                    if(data==="Data Added")
+                    if(Object.keys(data).length!==0)
                     {
+                        alert("Data Added")
                         Clear();
                         location.reload();
                     }
@@ -190,6 +190,7 @@ $(document).ready(function() {
               sort: true,
               searching: false,
               paging: true,
+              bInfo:false,
               columns: 
               [
                 {'data': 'id_user'},
@@ -202,10 +203,10 @@ $(document).ready(function() {
                     'mRender':function(o)
                     {
                         return "<div class='text-center'><a class='btn btn-outline-success btn-sm'"
-                                +" id='btnEdit'>Edit</a> "
+                                +" id='btnEdit'>Update</a> "
                                 +"&nbsp;&nbsp;"
                                 +"<a class='btn btn-outline-danger btn-sm' "
-                                +"id='btnDel'>Hapus</a><div>";
+                                +"id='btnDel'>Delete</a><div>";
                     }
                 }
               ]

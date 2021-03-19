@@ -63,22 +63,23 @@ public class DetailBayarObatDAO {
 
     public void save(detail_bayar_obat_model dbom, String page)
     {
-        System.out.println("-INSERT/UPDATE-");
+        System.out.println("-INSERT/UPDATEa-");
         String query=null;
         if(page.equals("update"))
         {
-            query="update pembelian_obat set id_obat=?, harga=?, jumlah=? where id_pembayaran=?";
+            query="update detail_bayar_obat set id_obat=?, harga=?, jumlah=? where id_pembayaran=?";
         }
         else if(page.equals("insert"))
         {
-            query="insert into pembelian_obat (id_obat, harga, jumlah) values (?,?,?)";
+            query="insert into detail_bayar_obat ( id_obat, harga, jumlah,id_pembayaran) values (?,?,?,?)";
         }
         try
         {
             ps=conn.prepareStatement(query);
             ps.setString(1, dbom.getId_obat());
-            ps.setString(2, dbom.getId_pembayaran());
+            ps.setDouble(2, dbom.getHarga());
             ps.setDouble(3, dbom.getJumlah());
+            ps.setString(4, dbom.getId_pembayaran());
             ps.executeUpdate();
             System.out.println("Insert/Update Data Success");
         }

@@ -46,21 +46,47 @@ public class ObatController extends HttpServlet {
             String jsonObat=g.toJson(listObat);
             out.println(jsonObat);
         }
-        else if(page=="insert")
+        else if("insert".equals(page))
         {
+            obat_model pm=new obat_model();
+            pm.setId_obat(dao.GenerateID());
+            pm.setNama_obat(request.getParameter("nama_obat"));
+            pm.setSatuan(request.getParameter("satuan"));
+            pm.setHarga_jual(Double.parseDouble(request.getParameter("harga_jual")));
+            pm.setStok(Integer.parseInt(request.getParameter("stok")));
+            pm.setNo_faktur(request.getParameter("no_faktur"));
+            pm.setUser_id(request.getParameter("user_id"));
+            dao.save(pm, page);
             
+            response.setContentType("text/html;charset=UTF-8");
+            out.print("Data Added");
         }
-        else if(page=="update")
+        else if("update".equals(page))
         {
+            obat_model pm=new obat_model();
+            pm.setId_obat(request.getParameter("id_obat"));
+            pm.setNama_obat(request.getParameter("nama_obat"));
+            pm.setSatuan(request.getParameter("satuan"));
+            pm.setHarga_jual(Double.parseDouble(request.getParameter("harga_jual")));
+            pm.setStok(Integer.parseInt(request.getParameter("stok")));
+            pm.setNo_faktur(request.getParameter("no_faktur"));
+            pm.setUser_id(request.getParameter("user_id"));
+            dao.save(pm, page);
             
+            response.setContentType("text/html;charset=UTF-8");
+            out.print("Data Updated");
         }
-        else if(page=="byid")
+        else if("byid".equals(page))
         {
-            
+            String json=g.toJson(dao.getObatById(request.getParameter("id_obat")));
+            response.setContentType("application/json");
+            out.println(json);
         }
-        else if(page=="delete")
+        else if("delete".equals(page))
         {
-            
+            dao.delete(request.getParameter("id_obat"));
+            response.setContentType("text/html;charset=UTF-8");
+            out.print("Data Deleted");
         }
     }
 

@@ -1,12 +1,40 @@
 package model;
 
 public class bayar_obat_model {
+
     private String id_pembayaran;
     private String tgl_pembayaran;
     private String id_pasien;
     private String id_resep;
+    private String id_obat;
+    private String harga;
+    private String jumlah;
     private String jenis_pembayaran;
     private String user_id;
+    
+    public String getId_obat() {
+        return id_obat;
+    }
+
+    public void setId_obat(String id_obat) {
+        this.id_obat = id_obat;
+    }
+
+    public String getHarga() {
+        return harga;
+    }
+
+    public void setHarga(String harga) {
+        this.harga = harga;
+    }
+
+    public String getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(String jumlah) {
+        this.jumlah = jumlah;
+    }
 
     public String getId_pembayaran() {
         return id_pembayaran;

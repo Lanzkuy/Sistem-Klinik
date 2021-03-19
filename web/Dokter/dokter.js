@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var iddokter, nama_dokter, id_poli, tgl_lahir, specialis, jkel, no_hp, no_ktp, no_npwp, email, password ,alamat, page, id_user;
+    var iddokter, nama_dokter, id_poli, tgl_lahir, specialis, jkel, no_hp, no_ktp, no_npwp, email, password ,alamat, page;
     
     function getInputValue()
     {
@@ -249,6 +249,7 @@ $(document).ready(function() {
               sort: true,
               searching: false,
               paging: true,
+              bInfo:false,
               columns: 
               [
                 {'data': 'id_dokter'},
@@ -264,10 +265,10 @@ $(document).ready(function() {
                     'mRender':function(o)
                     {
                         return "<div class='text-center'><a class='btn btn-outline-success btn-sm'"
-                                +" id='btnEdit'>Edit</a> "
+                                +" id='btnEdit'>Update</a> "
                                 +"&nbsp;&nbsp;"
                                 +"<a class='btn btn-outline-danger btn-sm' "
-                                +"id='btnDel'>Hapus</a></div>";
+                                +"id='btnDel'>Delete</a></div>";
                     }
                 }
               ]
